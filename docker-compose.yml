@@ -1,6 +1,7 @@
 version: "3.8"
 services:
     postgres:
+        container_name: db
         image: postgres
         environment:
             - POSTGRES_USER=postgres
@@ -9,16 +10,17 @@ services:
         volumes:
             - postgres-db-volume:/var/lib/postgresql/data
         ports:
-            - 5434:5432
+            - 5432:5432
         networks:
             - postgres-db-network
     pgadmin:
+        container_name: pgadmin
         image: dpage/pgadmin4
         environment:
-            PGADMIN_DEFAULT_EMAIL: "teste@teste.com"
-            PGADMIN_DEFAULT_PASSWORD: "teste"
+            PGADMIN_DEFAULT_EMAIL: "dhanushkagimhan@gmail.com"
+            PGADMIN_DEFAULT_PASSWORD: "123"
         ports:
-            - 16533:80
+            - 16532:80
         volumes:
             - ./servers.json:/pgadmin4/servers.json
         networks:
