@@ -1,6 +1,6 @@
-sirisuba_serives
+# sirisuba_serives
 
-# create docker progres db
+## create docker progres db
 
 docker compose up --build
 
@@ -16,7 +16,7 @@ docker compose down
 
 docker compose down --volumes
 
-# prisma
+## prisma
 
 ### after shema updation run this command for db updation
 
