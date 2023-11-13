@@ -10,7 +10,224 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  Male
+  Famale
+}
+
+enum FoodPreference {
+  NonVegetarian
+  Vegetarian
+  Vegan
+}
+
+enum ProposerStatus {
+  PendingEmailVerification
+  EmailVerified
+  PendingPayment
+  PaymentApproved
+  Active
+  Reject
+  Banned
+}
+
 model Proposer {
+  id                       Int                       @id @default(autoincrement())
+  email                    String                    @unique @db.VarChar(255)
+  password                 String
+  firstName                String
+  LastName                 String
+  profilePhoto             String?
+  otherPictures            String[]
+  bioTitle                 String?
+  bioDescription           String?                   @db.Text
+  gender                   Gender?
+  whatsAppNumber           String?
+  ethnicity                String?
+  religion                 String?
+  birthDay                 DateTime
+  caste                    String?
+  civilStatus              String?
+  height                   String?
+  country                  String?
+  stateOrDistrict          String?
+  city                     String?
+  education                String?
+  profession               String?
+  drinking                 Boolean?
+  smoking                  Boolean?
+  foodPreference           FoodPreference?
+  fatherEthnicity          String?
+  fatherReligion           String?
+  fatherCaste              String?
+  fatherProfession         String?
+  fatherCountryOfResidence String?
+  fatherAdditionalInfo     String?
+  motherEthnicity          String?
+  motherReligion           String?
+  motherCaste              String?
+  motherProfession         String?
+  motherCountryOfResidence String?
+  motherAdditionalInfo     String?
+  horoscopeMatching        Boolean?
+  status                   ProposerStatus
+  membershipExpiration     DateTime
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  proposing                MatchingProposal[]        @relation("proposeReceiving")
+  proposeBy                MatchingProposal[]        @relation("proposing")
+  rejectOrBannedReason     RejectOrBannedReason?
+  emailVerify              ProposerEmailVerify[]
+  forgotPassword           ProposerForgotPassword[]
+  referredMarketer         MarketerReferredProposal?
+  payments                 ProposerPayment[]
+}
+
+enum ProposerPaymentType {
+  Initial
+  Renewal
+}
+
+model ProposerPayment {
+  id         Int                 @id @default(autoincrement())
+  type       ProposerPaymentType
+  value      Int
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+  proposerId Int
+  proposer   Proposer            @relation(fields: [proposerId], references: [id])
+}
+
+enum MatchingProposalStatus {
+  Pending
+  Accept
+}
+
+model MatchingProposal {
+  id                Int                    @id @default(autoincrement())
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  status            MatchingProposalStatus
+  proposerId        Int
+  proposer          Proposer               @relation("proposing", fields: [proposerId], references: [id])
+  proposeReceiverId Int
+  proposeReceiver   Proposer               @relation("proposeReceiving", fields: [proposeReceiverId], references: [id])
+
+  @@unique([proposerId, proposeReceiverId])
+}
+
+model RejectOrBannedReason {
+  id         Int      @id @default(autoincrement())
+  reason     String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  proposerId Int      @unique
+  proposer   Proposer @relation(fields: [proposerId], references: [id])
+}
+
+model ProposerEmailVerify {
+  id             Int      @id @default(autoincrement())
+  code           String
+  expirationTime DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  proposerId     Int
+  proposer       Proposer @relation(fields: [proposerId], references: [id])
+
+  @@index([proposerId])
+}
+
+model ProposerForgotPassword {
+  id             Int      @id @default(autoincrement())
+  code           String
+  expirationTime DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  proposerId     Int
+  proposer       Proposer @relation(fields: [proposerId], references: [id])
+
+  @@index([proposerId])
+}
+
+model AffiliateMarketer {
+  id                Int                        @id @default(autoincrement())
+  email             String                     @unique @db.VarChar(255)
+  password          String
+  firstName         String
+  lastName          String
+  affiliateCode     String?
+  accountBalance    Int
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  emailVerify       MarketerEmailVerify[]
+  forgotPassword    MarketerForgotPassword[]
+  referredProposals MarketerReferredProposal[]
+  withdrawals       MarketerWithdrawal[]
+}
+
+model MarketerEmailVerify {
+  id             Int               @id @default(autoincrement())
+  code           String
+  expirationTime DateTime
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  marketerId     Int
+  marketer       AffiliateMarketer @relation(fields: [marketerId], references: [id])
+
+  @@index([marketerId])
+}
+
+model MarketerForgotPassword {
+  id             Int               @id @default(autoincrement())
+  code           String
+  expirationTime DateTime
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  marketerId     Int
+  marketer       AffiliateMarketer @relation(fields: [marketerId], references: [id])
+
+  @@index([marketerId])
+}
+
+model MarketerReferredProposal {
+  id           Int               @id @default(autoincrement())
+  paymentValue Int?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  marketerId   Int
+  marketer     AffiliateMarketer @relation(fields: [marketerId], references: [id])
+  proposerId   Int               @unique
+  proposer     Proposer          @relation(fields: [proposerId], references: [id])
+
+  @@index([marketerId])
+}
+
+model MarketerWithdrawal {
+  id         Int               @id @default(autoincrement())
+  value      Int
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  marketerId Int
+  marketer   AffiliateMarketer @relation(fields: [marketerId], references: [id])
+
+  @@index([marketerId])
+}
+
+model System {
+  name                        String   @id
+  adminEmail                  String   @unique @db.VarChar(255)
+  adminPassword               String
+  proposalPrice               Int
+  systemIncomeBalance         Int
+  totalAffiliateMarketersCost Int
+  totalSystemAccountBalance   Int
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+}
+
+model SystemWithdrawal {
   id        Int      @id @default(autoincrement())
-  email   String   @unique @db.VarChar(255)
+  value     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

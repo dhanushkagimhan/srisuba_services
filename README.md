@@ -20,4 +20,8 @@
 
 ### after shema updation run this command for db updation
 
-`prisma migrate dev`
+`npx prisma migrate dev`
+
+### for the prisma cline updation
+
+`npx prisma generate`
