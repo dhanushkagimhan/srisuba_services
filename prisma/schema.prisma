@@ -36,7 +36,7 @@ model Proposer {
   email                    String                    @unique @db.VarChar(255)
   password                 String
   firstName                String
-  LastName                 String
+  lastName                 String
   profilePhoto             String?
   otherPictures            String[]
   bioTitle                 String?
@@ -155,7 +155,7 @@ model AffiliateMarketer {
   password          String
   firstName         String
   lastName          String
-  affiliateCode     String?
+  affiliateCode     String?                    @unique
   accountBalance    Int
   createdAt         DateTime                   @default(now())
   updatedAt         DateTime                   @updatedAt

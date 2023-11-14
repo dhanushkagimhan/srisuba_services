@@ -8,7 +8,7 @@ services:
             - POSTGRES_PASSWORD=password
             - POSTGRES_DB=srisuba
         volumes:
-            - postgres-db-volume:/var/lib/postgresql/data
+            - db-volume:/var/lib/postgresql/data
         ports:
             - 5432:5432
         networks:
@@ -27,12 +27,12 @@ services:
             - postgres-db-network
 
 volumes:
-    postgres-db-volume:
+    db-volume:
         driver: local
         driver_opts:
             type: none
             o: bind
-            device: ./data
+            device: ${PWD}/date
 networks:
     postgres-db-network:
         driver: bridge
