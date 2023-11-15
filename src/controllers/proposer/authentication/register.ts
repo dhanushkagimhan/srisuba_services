@@ -5,6 +5,7 @@ import prisma from "../../../prismaClient/client";
 import bcrypt from "bcrypt";
 import { type Prisma } from "@prisma/client";
 import { validationResult } from "express-validator";
+import emailTransporter from "../../../emailSender/emailTransporter";
 
 dayjs.extend(relativeTime);
 
@@ -51,6 +52,20 @@ export const register = async (
         // } else {
 
         // }
+        const mailOptions = {
+            from: process.env.EMAIL_ADDRESS,
+            to: "dhanushkagimhan@gmail.com",
+            subject: "Sending Email using Node.js",
+            text: "That was easy!",
+        };
+
+        emailTransporter.sendMail(mailOptions, function (error, info) {
+            if (error != null) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
 
         return res.status(201).send(payload);
         // return res.status(201).send(toResturant(newResturant))
