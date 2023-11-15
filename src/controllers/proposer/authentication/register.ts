@@ -3,6 +3,8 @@ import { type Request, type Response } from "express";
 import relativeTime from "dayjs/plugin/relativeTime";
 import prisma from "../../../prismaClient/client";
 import bcrypt from "bcrypt";
+import { type Prisma } from "@prisma/client";
+import { validationResult } from "express-validator";
 
 dayjs.extend(relativeTime);
 
@@ -12,6 +14,7 @@ type registerPayload = {
     firstName: string;
     lastName: string;
     birthDay: string;
+    referralCode?: string;
 };
 
 export const register = async (
@@ -21,28 +24,14 @@ export const register = async (
     try {
         const payload: registerPayload = req.body;
 
-        // validation
+        const errors = validationResult(req);
 
-        const dob = dayjs(payload.birthDay);
-        const age = dayjs().diff(dob, "year");
-
-        if (age < 18) {
-            return res
-                .status(460)
-                .send({ message: "Age must be older than 18 years" });
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array(),
+            });
         }
-
-        const exists = await prisma.proposer.count({
-            where: { email: payload.email },
-        });
-
-        if (exists > 0) {
-            return res
-                .status(409)
-                .send({ message: "Email is already registered" });
-        }
-
-        // creating proposer
 
         const saltRound = 8;
         const hashPassword: string = await bcrypt.hash(
@@ -50,6 +39,18 @@ export const register = async (
             saltRound,
         );
         payload.password = hashPassword;
+
+        let newProposer: Prisma.ProposerCreateInput;
+
+        console.log(payload);
+
+        // if (payload.referralCode) {
+        //     newProposer = {
+
+        //     }
+        // } else {
+
+        // }
 
         return res.status(201).send(payload);
         // return res.status(201).send(toResturant(newResturant))

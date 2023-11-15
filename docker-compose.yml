@@ -28,11 +28,6 @@ services:
 
 volumes:
     db-volume:
-        driver: local
-        driver_opts:
-            type: none
-            o: bind
-            device: ${PWD}/date
 networks:
     postgres-db-network:
         driver: bridge

@@ -41,7 +41,7 @@ model Proposer {
   otherPictures            String[]
   bioTitle                 String?
   bioDescription           String?                   @db.Text
-  gender                   Gender?
+  gender                   Gender
   whatsAppNumber           String?
   ethnicity                String?
   religion                 String?
