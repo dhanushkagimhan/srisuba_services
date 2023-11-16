@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { checkExact, checkSchema } from "express-validator";
 import prisma from "../../../prismaClient/client";
-import { type Prisma } from "@prisma/client";
 
 export const registerValidation = checkExact(
     checkSchema({
@@ -9,12 +8,10 @@ export const registerValidation = checkExact(
             isEmail: { bail: true, errorMessage: "Please provide valid email" },
             custom: {
                 options: async (pEmail: string) => {
-                    const proposerSelect: Prisma.ProposerWhereInput = {
-                        email: pEmail,
-                    };
-
                     const exists = await prisma.proposer.count({
-                        where: proposerSelect,
+                        where: {
+                            email: pEmail,
+                        },
                     });
 
                     if (exists > 0) {

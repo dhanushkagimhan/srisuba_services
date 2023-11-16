@@ -11,6 +11,11 @@ router.post("/register", [
     proposerController.register,
 ] as RequestHandler[]);
 
+router.post("/email-verify", [
+    proposerValidation.emailVerifyValidation,
+    proposerController.emailVerify,
+] as RequestHandler[]);
+
 // marketer routes
 
 // admin routes

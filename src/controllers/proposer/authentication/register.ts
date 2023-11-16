@@ -130,14 +130,14 @@ export const register = async (
             }
         });
 
-        const responseDate: RegisterResponse = {
+        const responseData: RegisterResponse = {
             success: true,
             data: {
                 email: createProposer.email,
             },
         };
 
-        return res.status(201).send(responseDate);
+        return res.status(201).send(responseData);
     } catch (error) {
         console.log(`Unexpected Error {proposer-register} : ${error}`);
         return res
