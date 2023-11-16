@@ -12,7 +12,7 @@ datasource db {
 
 enum Gender {
   Male
-  Famale
+  Female
 }
 
 enum FoodPreference {

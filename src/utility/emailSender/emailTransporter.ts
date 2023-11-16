@@ -8,6 +8,4 @@ const emailTransporter = nodemailer.createTransport({
     },
 });
 
-console.log(process.env.EMAIL_ADDRESS);
-
 export default emailTransporter;

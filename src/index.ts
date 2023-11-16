@@ -6,7 +6,7 @@ import express, {
 import cors from "cors";
 import "dotenv/config";
 import router from "./routes";
-import prisma from "./prismaClient/client";
+import prisma from "./utility/prismaClient/client";
 
 const app: Application = express();
 const PORT: string | number = process.env.PORT ?? 8080;

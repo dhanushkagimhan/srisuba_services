@@ -1,6 +1,6 @@
 import express, { type RequestHandler, type Application } from "express";
 import * as proposerController from "../controllers/proposer";
-import * as proposerValidation from "../validations/proposer";
+import * as proposerValidation from "../utility/validations/proposer";
 
 const router: Application = express();
 

@@ -18,12 +18,9 @@ export const registerValidation = checkExact(
                     });
 
                     if (exists > 0) {
-                        return false;
-                    } else {
-                        return true;
+                        throw new Error("Email is already registered");
                     }
                 },
-                errorMessage: "Email is already registered",
             },
         },
         password: {

@@ -1,21 +1,29 @@
 import dayjs from "dayjs";
 import { type Request, type Response } from "express";
 import relativeTime from "dayjs/plugin/relativeTime";
-import prisma from "../../../prismaClient/client";
+import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
-import { type Prisma } from "@prisma/client";
+import { ProposerStatus, type Prisma, type Gender } from "@prisma/client";
 import { validationResult } from "express-validator";
-import emailTransporter from "../../../emailSender/emailTransporter";
+import emailTransporter from "../../../utility/emailSender/emailTransporter";
 
 dayjs.extend(relativeTime);
 
-type registerPayload = {
+type RegisterPayload = {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
     birthDay: string;
+    gender: Gender;
     referralCode?: string;
+};
+
+type RegisterResponse = {
+    success: boolean;
+    data: {
+        email: string;
+    };
 };
 
 export const register = async (
@@ -23,13 +31,14 @@ export const register = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: registerPayload = req.body;
+        const payload: RegisterPayload = req.body;
 
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             return res.status(400).json({
                 success: false,
+                message: "validation failed",
                 errors: errors.array(),
             });
         }
@@ -39,38 +48,103 @@ export const register = async (
             payload.password,
             saltRound,
         );
-        payload.password = hashPassword;
 
-        let newProposer: Prisma.ProposerCreateInput;
+        const emailVerifyCode: string = (Math.random() * 1000000)
+            .toPrecision(6)
+            .toString();
 
-        console.log(payload);
+        const hashEmailVerification: string = await bcrypt.hash(
+            emailVerifyCode,
+            saltRound,
+        );
 
-        // if (payload.referralCode) {
-        //     newProposer = {
+        const emailVeificationCodeExpireTime: Date = dayjs()
+            .add(15, "minute")
+            .toDate();
 
-        //     }
-        // } else {
+        const pBirthDay = new Date(payload.birthDay);
 
-        // }
+        const proposerExpirationTime = new Date();
+
+        const newProposer: Prisma.ProposerCreateInput = {
+            email: payload.email,
+            password: hashPassword,
+            firstName: payload.firstName,
+            lastName: payload.lastName,
+            birthDay: pBirthDay,
+            gender: payload.gender,
+            membershipExpiration: proposerExpirationTime,
+            status: ProposerStatus.PendingEmailVerification,
+            emailVerify: {
+                create: {
+                    code: hashEmailVerification,
+                    expirationTime: emailVeificationCodeExpireTime,
+                },
+            },
+        };
+
+        if (payload.referralCode != null) {
+            const marketerSelect: Prisma.AffiliateMarketerWhereUniqueInput = {
+                affiliateCode: payload.referralCode,
+            };
+
+            const aMarkerterId = await prisma.affiliateMarketer.findUnique({
+                where: marketerSelect,
+                select: {
+                    id: true,
+                },
+            });
+
+            if (aMarkerterId != null) {
+                newProposer.referredMarketer = {
+                    create: {
+                        marketerId: aMarkerterId.id,
+                    },
+                };
+            }
+        }
+
+        console.log(
+            "{proposer-register} before create proposer : ",
+            newProposer,
+        );
+
+        const createProposer = await prisma.proposer.create({
+            data: newProposer,
+        });
+
+        console.log("{proposer-register} create proposer : ", createProposer);
+
         const mailOptions = {
             from: process.env.EMAIL_ADDRESS,
             to: "dhanushkagimhan@gmail.com",
-            subject: "Sending Email using Node.js",
-            text: "That was easy!",
+            subject: "Srisuba - Email verification",
+            text: `your email verification code : ${emailVerifyCode}`,
         };
 
         emailTransporter.sendMail(mailOptions, function (error, info) {
             if (error != null) {
                 console.log(error);
             } else {
-                console.log("Email sent: " + info.response);
+                console.log(
+                    "{proposer-register} verification Email sent: " +
+                        info.response,
+                );
             }
         });
 
-        return res.status(201).send(payload);
-        // return res.status(201).send(toResturant(newResturant))
+        const responseDate: RegisterResponse = {
+            success: true,
+            data: {
+                email: createProposer.email,
+            },
+        };
+
+        return res.status(201).send(responseDate);
     } catch (error) {
-        console.log(`Unexpected Error : ${error}`);
-        return res.status(500).send({ message: "system Error" });
+        console.log(`Unexpected Error {proposer-register} : ${error}`);
+        return res
+            .status(500)
+            .send({ success: false, message: "system Error" });
     }
 };
