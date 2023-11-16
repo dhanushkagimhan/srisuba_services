@@ -1,13 +1,10 @@
 import dayjs from "dayjs";
 import { type Request, type Response } from "express";
-import relativeTime from "dayjs/plugin/relativeTime";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { ProposerStatus, type Prisma, type Gender } from "@prisma/client";
 import { validationResult } from "express-validator";
 import emailTransporter from "../../../utility/emailSender/emailTransporter";
-
-dayjs.extend(relativeTime);
 
 type RegisterPayload = {
     email: string;
