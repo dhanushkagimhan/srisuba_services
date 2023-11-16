@@ -77,8 +77,8 @@ model Proposer {
   proposing                MatchingProposal[]        @relation("proposeReceiving")
   proposeBy                MatchingProposal[]        @relation("proposing")
   rejectOrBannedReason     RejectOrBannedReason?
-  emailVerify              ProposerEmailVerify[]
-  forgotPassword           ProposerForgotPassword[]
+  emailVerify              ProposerEmailVerify?
+  forgotPassword           ProposerForgotPassword?
   referredMarketer         MarketerReferredProposal?
   payments                 ProposerPayment[]
 }
@@ -131,10 +131,8 @@ model ProposerEmailVerify {
   expirationTime DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  proposerId     Int
+  proposerId     Int      @unique
   proposer       Proposer @relation(fields: [proposerId], references: [id])
-
-  @@index([proposerId])
 }
 
 model ProposerForgotPassword {
@@ -143,10 +141,8 @@ model ProposerForgotPassword {
   expirationTime DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  proposerId     Int
+  proposerId     Int      @unique
   proposer       Proposer @relation(fields: [proposerId], references: [id])
-
-  @@index([proposerId])
 }
 
 model AffiliateMarketer {
@@ -159,10 +155,21 @@ model AffiliateMarketer {
   accountBalance    Int
   createdAt         DateTime                   @default(now())
   updatedAt         DateTime                   @updatedAt
-  emailVerify       MarketerEmailVerify[]
-  forgotPassword    MarketerForgotPassword[]
+  emailVerify       MarketerEmailVerify?
+  forgotPassword    MarketerForgotPassword?
   referredProposals MarketerReferredProposal[]
   withdrawals       MarketerWithdrawal[]
+  bankAccount       MarketerBankAccount?
+}
+
+model MarketerBankAccount {
+  id                Int               @id @default(autoincrement())
+  bankName          String
+  branch            String
+  accountHolderName String
+  accountNumber     String
+  marketerId        Int               @unique
+  marketer          AffiliateMarketer @relation(fields: [marketerId], references: [id])
 }
 
 model MarketerEmailVerify {
@@ -171,10 +178,8 @@ model MarketerEmailVerify {
   expirationTime DateTime
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
-  marketerId     Int
+  marketerId     Int               @unique
   marketer       AffiliateMarketer @relation(fields: [marketerId], references: [id])
-
-  @@index([marketerId])
 }
 
 model MarketerForgotPassword {
@@ -183,10 +188,8 @@ model MarketerForgotPassword {
   expirationTime DateTime
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
-  marketerId     Int
+  marketerId     Int               @unique
   marketer       AffiliateMarketer @relation(fields: [marketerId], references: [id])
-
-  @@index([marketerId])
 }
 
 model MarketerReferredProposal {
