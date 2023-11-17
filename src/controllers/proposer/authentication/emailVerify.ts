@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { ProposerStatus } from "@prisma/client";
-import proposerAccessTokenGenerate from "../../../utility/accessTokenGenerator/accessTokenGenerator";
+import proposerAccessTokenGenerate from "../../../utility/commonMethods/accessTokenGenerator";
 import { Role } from "../../../utility/types";
 
 type EmailVerifyPayload = {

@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
 import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { ProposerStatus, type Prisma, type Gender } from "@prisma/client";
 import { validationResult } from "express-validator";
 import emailTransporter from "../../../utility/emailSender/emailTransporter";
+import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 
 type RegisterPayload = {
     email: string;
@@ -46,18 +46,11 @@ export const register = async (
             saltRound,
         );
 
-        const emailVerifyCode: string = (Math.random() * 1000000)
-            .toPrecision(6)
-            .toString();
-
-        const hashEmailVerification: string = await bcrypt.hash(
+        const [
             emailVerifyCode,
-            saltRound,
-        );
-
-        const emailVeificationCodeExpireTime: Date = dayjs()
-            .add(15, "minute")
-            .toDate();
+            hashEmailVerification,
+            emailVerificationCodeExpireTime,
+        ] = await emailVerificationCode();
 
         const pBirthDay = new Date(payload.birthDay);
 
@@ -75,7 +68,7 @@ export const register = async (
             emailVerify: {
                 create: {
                     code: hashEmailVerification,
-                    expirationTime: emailVeificationCodeExpireTime,
+                    expirationTime: emailVerificationCodeExpireTime,
                 },
             },
         };
