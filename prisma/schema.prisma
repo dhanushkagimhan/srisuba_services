@@ -217,15 +217,26 @@ model MarketerWithdrawal {
 }
 
 model System {
-  name                        String   @id
-  adminEmail                  String   @unique @db.VarChar(255)
+  name                        String            @id
+  adminEmail                  String            @unique @db.VarChar(255)
   adminPassword               String
   proposalPrice               Int
   systemIncomeBalance         Int
   totalAffiliateMarketersCost Int
   totalSystemAccountBalance   Int
-  createdAt                   DateTime @default(now())
-  updatedAt                   DateTime @updatedAt
+  createdAt                   DateTime          @default(now())
+  updatedAt                   DateTime          @updatedAt
+  adminEmailVerify            AdminEmailVerify?
+}
+
+model AdminEmailVerify {
+  id             Int      @id @default(autoincrement())
+  code           String
+  expirationTime DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  systemName     String   @unique
+  system         System   @relation(fields: [systemName], references: [name])
 }
 
 model SystemWithdrawal {
