@@ -51,8 +51,12 @@ export const reGenerateEmailVerificationCode = async (
             },
             data: {
                 emailVerify: {
-                    update: {
-                        data: {
+                    upsert: {
+                        create: {
+                            code: hashEmailVerification,
+                            expirationTime: emailVerificationCodeExpireTime,
+                        },
+                        update: {
                             code: hashEmailVerification,
                             expirationTime: emailVerificationCodeExpireTime,
                         },
@@ -60,6 +64,7 @@ export const reGenerateEmailVerificationCode = async (
                 },
             },
             select: {
+                email: true,
                 emailVerify: true,
             },
         });
@@ -68,10 +73,6 @@ export const reGenerateEmailVerificationCode = async (
             "proposer email verify update {proposer-reGenerateEmailVerificationCode} : ",
             emailVerificationUpdate,
         );
-
-        if (emailVerificationUpdate == null) {
-            throw new Error("verification code db updater return the null");
-        }
 
         const mailOptions = {
             from: process.env.EMAIL_ADDRESS,

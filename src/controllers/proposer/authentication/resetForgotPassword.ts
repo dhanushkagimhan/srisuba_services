@@ -44,19 +44,30 @@ export const resetForgotPassword = async (
             emailVerificationCodeExpireTime,
         ] = await emailVerificationCode();
 
-        const forgotPasswordCreate = await prisma.proposerForgotPassword.create(
-            {
-                data: {
-                    code: hashEmailVerification,
-                    expirationTime: emailVerificationCodeExpireTime,
-                    proposer: {
-                        connect: {
-                            email: payload.email,
+        const forgotPasswordCreate = await prisma.proposer.update({
+            where: {
+                email: payload.email,
+            },
+
+            data: {
+                forgotPassword: {
+                    upsert: {
+                        create: {
+                            code: hashEmailVerification,
+                            expirationTime: emailVerificationCodeExpireTime,
+                        },
+                        update: {
+                            code: hashEmailVerification,
+                            expirationTime: emailVerificationCodeExpireTime,
                         },
                     },
                 },
             },
-        );
+            select: {
+                email: true,
+                forgotPassword: true,
+            },
+        });
 
         console.log(
             "proposer email verify update {proposer-resetForgotPassword} : ",
