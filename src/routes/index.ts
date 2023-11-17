@@ -1,23 +1,8 @@
-import express, { type RequestHandler, type Application } from "express";
-import * as proposerController from "../controllers/proposer";
-import * as proposerValidation from "../utility/validations/proposer";
+import express, { type Application } from "express";
+import proposerRouter from "./proposer/proposer";
 
 const router: Application = express();
 
-// proposer routes
-
-router.post("/register", [
-    proposerValidation.registerValidation,
-    proposerController.register,
-] as RequestHandler[]);
-
-router.post("/email-verify", [
-    proposerValidation.emailVerifyValidation,
-    proposerController.emailVerify,
-] as RequestHandler[]);
-
-// marketer routes
-
-// admin routes
+router.use("/proposer", proposerRouter);
 
 export default router;

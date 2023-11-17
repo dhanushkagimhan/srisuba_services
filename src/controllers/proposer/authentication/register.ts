@@ -6,7 +6,7 @@ import { validationResult } from "express-validator";
 import emailTransporter from "../../../utility/emailSender/emailTransporter";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 
-type RegisterPayload = {
+type RequestPayload = {
     email: string;
     password: string;
     firstName: string;
@@ -16,7 +16,7 @@ type RegisterPayload = {
     referralCode?: string;
 };
 
-type RegisterResponse = {
+type ApiResponse = {
     success: boolean;
     data: {
         email: string;
@@ -28,7 +28,7 @@ export const register = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: RegisterPayload = req.body;
+        const payload: RequestPayload = req.body;
 
         const errors = validationResult(req);
 
@@ -107,7 +107,7 @@ export const register = async (
 
         const mailOptions = {
             from: process.env.EMAIL_ADDRESS,
-            to: "dhanushkagimhan@gmail.com",
+            to: payload.email,
             subject: "Srisuba - Email verification",
             text: `your email verification code : ${emailVerifyCode}`,
         };
@@ -123,7 +123,7 @@ export const register = async (
             }
         });
 
-        const responseData: RegisterResponse = {
+        const responseData: ApiResponse = {
             success: true,
             data: {
                 email: createProposer.email,

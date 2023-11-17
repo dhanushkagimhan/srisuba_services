@@ -1,21 +1,23 @@
 import { type Request, type Response } from "express";
-import { validationResult } from "express-validator";
+import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { ProposerStatus } from "@prisma/client";
 import proposerAccessTokenGenerate from "../../../utility/commonMethods/accessTokenGenerator";
 import { Role } from "../../../utility/types";
 
-type EmailVerifyPayload = {
+type RequestPayload = {
     email: string;
     code: string;
 };
 
-type EmailVerifyResponse = {
+type ApiResponse = {
     success: boolean;
-    data: {
+    data?: {
         accessToken: string;
     };
+    message?: string;
+    errors?: ValidationError[];
 };
 
 export const emailVerify = async (
@@ -23,7 +25,7 @@ export const emailVerify = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: EmailVerifyPayload = req.body;
+        const payload: RequestPayload = req.body;
 
         const errors = validationResult(req);
 
@@ -106,7 +108,7 @@ export const emailVerify = async (
             proposerUpdate.id,
         );
 
-        const responseData: EmailVerifyResponse = {
+        const responseData: ApiResponse = {
             success: true,
             data: {
                 accessToken: pAccessToken,
