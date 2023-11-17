@@ -8,17 +8,24 @@ export const reGenerateEmailVerificationCodeValidation = checkExact(
             isEmail: { bail: true, errorMessage: "Please provide valid email" },
             custom: {
                 options: async (pEmail: string) => {
-                    const exists = await prisma.proposer.count({
+                    const proposer = await prisma.proposer.findUnique({
                         where: {
                             email: pEmail,
-                            status: ProposerStatus.PendingEmailVerification,
+                        },
+                        select: {
+                            email: true,
+                            status: true,
                         },
                     });
 
-                    if (exists === 0) {
-                        throw new Error(
-                            "Email is not registered or already verified",
-                        );
+                    if (proposer == null) {
+                        throw new Error("Email is not registered");
+                    }
+                    if (
+                        proposer.status !==
+                        ProposerStatus.PendingEmailVerification
+                    ) {
+                        throw new Error("Email is already verified");
                     }
                 },
             },
