@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { ProposerStatus, type Prisma, type Gender } from "@prisma/client";
-import { validationResult } from "express-validator";
+import { type ValidationError, validationResult } from "express-validator";
 import emailTransporter from "../../../utility/emailSender/emailTransporter";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 
@@ -18,9 +18,11 @@ type RequestPayload = {
 
 type ApiResponse = {
     success: boolean;
-    data: {
+    data?: {
         email: string;
     };
+    message?: string;
+    errors?: ValidationError[];
 };
 
 export const register = async (
@@ -33,11 +35,12 @@ export const register = async (
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({
+            const responseData: ApiResponse = {
                 success: false,
                 message: "validation failed",
                 errors: errors.array(),
-            });
+            };
+            return res.status(400).send(responseData);
         }
 
         const saltRound = 8;
@@ -133,8 +136,10 @@ export const register = async (
         return res.status(201).send(responseData);
     } catch (error) {
         console.log(`Unexpected Error {proposer-register} : ${error}`);
-        return res
-            .status(500)
-            .send({ success: false, message: "system Error" });
+        const responseData: ApiResponse = {
+            success: false,
+            message: "system Error",
+        };
+        return res.status(500).send(responseData);
     }
 };

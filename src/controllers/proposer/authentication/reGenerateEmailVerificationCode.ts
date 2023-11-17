@@ -31,7 +31,7 @@ export const reGenerateEmailVerificationCode = async (
                 errors: errors.array(),
             };
 
-            return res.status(400).json(responseData);
+            return res.status(400).send(responseData);
         }
 
         console.log(
