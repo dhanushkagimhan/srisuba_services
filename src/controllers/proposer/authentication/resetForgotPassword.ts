@@ -6,16 +6,18 @@ import emailTransporter from "../../../utility/emailSender/emailTransporter";
 
 type RequestPayload = {
     email: string;
-    code: string;
 };
 
 type ApiResponse = {
     success: boolean;
     message?: string;
     errors?: ValidationError[];
+    data?: {
+        email: string;
+    };
 };
 
-export const reGenerateEmailVerificationCode = async (
+export const resetForgotPassword = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -34,10 +36,7 @@ export const reGenerateEmailVerificationCode = async (
             return res.status(400).send(responseData);
         }
 
-        console.log(
-            "{proposer-regenerate-email-email-verification-code} payload : ",
-            payload,
-        );
+        console.log("{proposer-resetForgotPassword} payload : ", payload);
 
         const [
             emailVerifyCode,
@@ -45,39 +44,30 @@ export const reGenerateEmailVerificationCode = async (
             emailVerificationCodeExpireTime,
         ] = await emailVerificationCode();
 
-        const emailVerificationUpdate = await prisma.proposer.update({
-            where: {
-                email: payload.email,
-            },
-            data: {
-                emailVerify: {
-                    update: {
-                        data: {
-                            code: hashEmailVerification,
-                            expirationTime: emailVerificationCodeExpireTime,
+        const forgotPasswordCreate = await prisma.proposerForgotPassword.create(
+            {
+                data: {
+                    code: hashEmailVerification,
+                    expirationTime: emailVerificationCodeExpireTime,
+                    proposer: {
+                        connect: {
+                            email: payload.email,
                         },
                     },
                 },
             },
-            select: {
-                emailVerify: true,
-            },
-        });
-
-        console.log(
-            "proposer email verify update {proposer-reGenerateEmailVerificationCode} : ",
-            emailVerificationUpdate,
         );
 
-        if (emailVerificationUpdate == null) {
-            throw new Error("verification code db updater return the null");
-        }
+        console.log(
+            "proposer email verify update {proposer-resetForgotPassword} : ",
+            forgotPasswordCreate,
+        );
 
         const mailOptions = {
             from: process.env.EMAIL_ADDRESS,
             to: payload.email,
-            subject: "Srisuba - Email verification",
-            text: `your email verification code : ${emailVerifyCode}`,
+            subject: "Srisuba - Reset forgotten password",
+            text: `your reset password verification code : ${emailVerifyCode}`,
         };
 
         emailTransporter.sendMail(mailOptions, function (error, info) {
@@ -85,7 +75,7 @@ export const reGenerateEmailVerificationCode = async (
                 console.log(error);
             } else {
                 console.log(
-                    "{proposer-reGenerateEmailVerificationCode} verification Email sent: " +
+                    "{proposer-resetForgotPassword} verification Email sent: " +
                         info.response,
                 );
             }
@@ -93,12 +83,15 @@ export const reGenerateEmailVerificationCode = async (
 
         const responseData: ApiResponse = {
             success: true,
+            data: {
+                email: payload.email,
+            },
         };
 
         return res.status(200).send(responseData);
     } catch (error) {
         console.log(
-            `Unexpected Error {proposer-reGenerateEmailVerificationCode} : ${error}`,
+            `Unexpected Error {proposer-resetForgotPassword} : ${error}`,
         );
 
         const responseData: ApiResponse = {

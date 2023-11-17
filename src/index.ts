@@ -40,8 +40,8 @@ process.on("SIGTERM", async () => {
 
 try {
     app.listen(PORT, () => {
-        console.log(`Server is listning PORT: ${PORT}`);
+        console.log(`Server is listening PORT: ${PORT}`);
     });
 } catch (error: any) {
-    console.log(`Error occureed: ${error.message}`);
+    console.log(`Error occurred: ${error.message}`);
 }
