@@ -19,9 +19,9 @@ proposerRouter.post("/regen-email-verify-code", [
     proposerController.reGenerateEmailVerificationCode,
 ] as RequestHandler[]);
 
-proposerRouter.post("/reset-forgotten-password", [
-    proposerValidation.resetForgotPasswordValidation,
-    proposerController.resetForgotPassword,
+proposerRouter.post("/forgot-password", [
+    proposerValidation.forgotPasswordValidation,
+    proposerController.forgotPassword,
 ] as RequestHandler[]);
 
 export default proposerRouter;

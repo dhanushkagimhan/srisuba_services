@@ -17,7 +17,7 @@ type ApiResponse = {
     };
 };
 
-export const resetForgotPassword = async (
+export const forgotPassword = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -36,7 +36,7 @@ export const resetForgotPassword = async (
             return res.status(400).send(responseData);
         }
 
-        console.log("{proposer-resetForgotPassword} payload : ", payload);
+        console.log("{proposer-forgotPassword} payload : ", payload);
 
         const [
             emailVerifyCode,
@@ -70,7 +70,7 @@ export const resetForgotPassword = async (
         });
 
         console.log(
-            "proposer email verify update {proposer-resetForgotPassword} : ",
+            "proposer email verify update {proposer-forgotPassword} : ",
             forgotPasswordCreate,
         );
 
@@ -86,7 +86,7 @@ export const resetForgotPassword = async (
                 console.log(error);
             } else {
                 console.log(
-                    "{proposer-resetForgotPassword} verification Email sent: " +
+                    "{proposer-forgotPassword} verification Email sent: " +
                         info.response,
                 );
             }
@@ -101,9 +101,7 @@ export const resetForgotPassword = async (
 
         return res.status(200).send(responseData);
     } catch (error) {
-        console.log(
-            `Unexpected Error {proposer-resetForgotPassword} : ${error}`,
-        );
+        console.log(`Unexpected Error {proposer-forgotPassword} : ${error}`);
 
         const responseData: ApiResponse = {
             success: false,

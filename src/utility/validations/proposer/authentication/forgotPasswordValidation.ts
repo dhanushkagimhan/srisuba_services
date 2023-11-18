@@ -1,7 +1,7 @@
 import { checkExact, checkSchema } from "express-validator";
 import prisma from "../../../prismaClient/client";
 
-export const resetForgotPasswordValidation = checkExact(
+export const forgotPasswordValidation = checkExact(
     checkSchema({
         email: {
             isEmail: { bail: true, errorMessage: "Please provide valid email" },
