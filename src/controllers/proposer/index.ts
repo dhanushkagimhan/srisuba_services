@@ -1,11 +1,6 @@
 import { emailVerify } from "./authentication/emailVerify";
-import { reGenerateEmailVerificationCode } from "./authentication/reGenerateEmailVerificationCode";
+import { regenerateEmailVerify } from "./authentication/regenerateEmailVerify";
 import { register } from "./authentication/register";
 import { forgotPassword } from "./authentication/forgotPassword";
 
-export {
-    register,
-    emailVerify,
-    reGenerateEmailVerificationCode,
-    forgotPassword,
-};
+export { register, emailVerify, regenerateEmailVerify, forgotPassword };

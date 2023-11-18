@@ -2,7 +2,7 @@ import { ProposerStatus } from "@prisma/client";
 import { checkExact, checkSchema } from "express-validator";
 import prisma from "../../../prismaClient/client";
 
-export const reGenerateEmailVerificationCodeValidation = checkExact(
+export const regenerateEmailVerifyValidation = checkExact(
     checkSchema({
         email: {
             isEmail: { bail: true, errorMessage: "Please provide valid email" },

@@ -14,9 +14,9 @@ proposerRouter.post("/email-verify", [
     proposerController.emailVerify,
 ] as RequestHandler[]);
 
-proposerRouter.post("/regen-email-verify-code", [
-    proposerValidation.reGenerateEmailVerificationCodeValidation,
-    proposerController.reGenerateEmailVerificationCode,
+proposerRouter.post("/regen-email-verify", [
+    proposerValidation.regenerateEmailVerifyValidation,
+    proposerController.regenerateEmailVerify,
 ] as RequestHandler[]);
 
 proposerRouter.post("/forgot-password", [

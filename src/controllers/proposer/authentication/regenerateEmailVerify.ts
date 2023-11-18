@@ -15,7 +15,7 @@ type ApiResponse = {
     errors?: ValidationError[];
 };
 
-export const reGenerateEmailVerificationCode = async (
+export const regenerateEmailVerify = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -34,10 +34,7 @@ export const reGenerateEmailVerificationCode = async (
             return res.status(400).send(responseData);
         }
 
-        console.log(
-            "{proposer-regenerate-email-email-verification-code} payload : ",
-            payload,
-        );
+        console.log("{proposer-regenerateEmailVerify} payload : ", payload);
 
         const [
             emailVerifyCode,
@@ -70,7 +67,7 @@ export const reGenerateEmailVerificationCode = async (
         });
 
         console.log(
-            "proposer email verify update {proposer-reGenerateEmailVerificationCode} : ",
+            "proposer email verify update {proposer-regenerateEmailVerify} : ",
             emailVerificationUpdate,
         );
 
@@ -86,7 +83,7 @@ export const reGenerateEmailVerificationCode = async (
                 console.log(error);
             } else {
                 console.log(
-                    "{proposer-reGenerateEmailVerificationCode} verification Email sent: " +
+                    "{proposer-regenerateEmailVerify} verification Email sent: " +
                         info.response,
                 );
             }
@@ -99,7 +96,7 @@ export const reGenerateEmailVerificationCode = async (
         return res.status(200).send(responseData);
     } catch (error) {
         console.log(
-            `Unexpected Error {proposer-reGenerateEmailVerificationCode} : ${error}`,
+            `Unexpected Error {proposer-regenerateEmailVerify} : ${error}`,
         );
 
         const responseData: ApiResponse = {
