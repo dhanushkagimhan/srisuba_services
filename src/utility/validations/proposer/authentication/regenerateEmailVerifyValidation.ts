@@ -5,7 +5,8 @@ import prisma from "../../../prismaClient/client";
 export const regenerateEmailVerifyValidation = checkExact(
     checkSchema({
         email: {
-            isEmail: { bail: true, errorMessage: "Please provide valid email" },
+            exists: { errorMessage: "email is required", bail: true },
+            isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
                     const proposer = await prisma.proposer.findUnique({
