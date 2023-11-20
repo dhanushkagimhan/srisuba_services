@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 type TokenBody = {
     role: Role;
     email: string;
-    _id?: number;
+    id?: number;
 };
 
 const proposerAccessTokenGenerate = (
@@ -16,7 +16,7 @@ const proposerAccessTokenGenerate = (
     const tokenBody: TokenBody = { role: uRole, email: uEmail };
 
     if (uRole !== Role.Admin) {
-        tokenBody._id = id;
+        tokenBody.id = id;
     }
 
     const accessToken: string = jwt.sign(tokenBody, SECRET_KEY, {
