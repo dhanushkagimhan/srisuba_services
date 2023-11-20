@@ -3,6 +3,7 @@ import { regenerateEmailVerifyValidation } from "./authentication/regenerateEmai
 import { registerValidation } from "./authentication/registerValidation";
 import { forgotPasswordValidation } from "./authentication/forgotPasswordValidation";
 import { resetPasswordValidation } from "./authentication/resetPasswordValidation";
+import { loginValidation } from "./authentication/loginValidation";
 
 export {
     registerValidation,
@@ -10,4 +11,5 @@ export {
     regenerateEmailVerifyValidation,
     forgotPasswordValidation,
     resetPasswordValidation,
+    loginValidation,
 };

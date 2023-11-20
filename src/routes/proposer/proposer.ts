@@ -29,4 +29,9 @@ proposerRouter.post("/reset-password", [
     proposerController.resetPassword,
 ] as RequestHandler[]);
 
+proposerRouter.post("/login", [
+    proposerValidation.loginValidation,
+    proposerController.login,
+] as RequestHandler[]);
+
 export default proposerRouter;
