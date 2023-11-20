@@ -1,0 +1,43 @@
+import { checkExact, checkSchema } from "express-validator";
+import prisma from "../../../prismaClient/client";
+
+export const resetPasswordValidation = checkExact(
+    checkSchema({
+        email: {
+            exists: { errorMessage: "email is required", bail: true },
+            isEmail: { errorMessage: "Please provide valid email", bail: true },
+            custom: {
+                options: async (pEmail: string) => {
+                    const exists = await prisma.proposer.count({
+                        where: {
+                            email: pEmail,
+                        },
+                    });
+
+                    if (exists === 0) {
+                        throw new Error("Email is not registered");
+                    }
+                },
+            },
+        },
+        code: {
+            exists: { errorMessage: "code is required", bail: true },
+            isString: { errorMessage: "code should be string", bail: true },
+            isLength: {
+                options: { min: 6, max: 6 },
+                errorMessage: "code should be 6 characters",
+            },
+        },
+        newPassword: {
+            exists: { errorMessage: "newPassword is required", bail: true },
+            isString: {
+                errorMessage: "newPassword should be string",
+                bail: true,
+            },
+            isLength: {
+                options: { min: 8 },
+                errorMessage: "newPassword should be at least 8 characters",
+            },
+        },
+    }),
+);
