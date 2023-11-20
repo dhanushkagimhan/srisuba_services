@@ -5,7 +5,12 @@ import prisma from "../../../prismaClient/client";
 export const registerValidation = checkExact(
     checkSchema({
         email: {
-            isEmail: { bail: true, errorMessage: "Please provide valid email" },
+            exists: {
+                errorMessage: "email is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
+            isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
                     const exists = await prisma.proposer.count({
@@ -21,8 +26,15 @@ export const registerValidation = checkExact(
             },
         },
         password: {
-            exists: { errorMessage: "Password is required" },
-            isString: { errorMessage: "password should be string" },
+            exists: {
+                errorMessage: "Password is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
+            isString: {
+                errorMessage: "password should be string",
+                bail: true,
+            },
             isLength: {
                 options: { min: 8 },
                 errorMessage: "Password should be at least 8 characters",
@@ -32,6 +44,7 @@ export const registerValidation = checkExact(
             exists: {
                 errorMessage: "firstName name is required",
                 options: { checkFalsy: true },
+                bail: true,
             },
             isString: { errorMessage: "firstName should be string" },
         },
@@ -39,18 +52,29 @@ export const registerValidation = checkExact(
             exists: {
                 errorMessage: "lastName name is required",
                 options: { checkFalsy: true },
+                bail: true,
             },
             isString: { errorMessage: "lastName should be string" },
         },
         gender: {
-            isString: { errorMessage: "Gender should be string" },
+            exists: {
+                errorMessage: "gender is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
+            isString: { errorMessage: "Gender should be string", bail: true },
             isIn: {
                 options: [["Male", "Female"]],
                 errorMessage: "Gender is invalid",
             },
         },
         birthDay: {
-            isString: { errorMessage: "birthDay should be string" },
+            exists: {
+                errorMessage: "birthDay is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
+            isString: { errorMessage: "birthDay should be string", bail: true },
             custom: {
                 options: (birthDay: string) => {
                     const dob = dayjs(birthDay);
@@ -67,6 +91,7 @@ export const registerValidation = checkExact(
         },
         referralCode: {
             optional: true,
+            isString: { errorMessage: "referralCode should be string" },
         },
     }),
 );
