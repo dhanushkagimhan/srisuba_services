@@ -5,7 +5,11 @@ import prisma from "../../../prismaClient/client";
 export const emailVerifyValidation = checkExact(
     checkSchema({
         email: {
-            exists: { errorMessage: "email is required", bail: true },
+            exists: {
+                errorMessage: "email is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
@@ -32,7 +36,11 @@ export const emailVerifyValidation = checkExact(
             },
         },
         code: {
-            exists: { errorMessage: "code is required", bail: true },
+            exists: {
+                errorMessage: "code is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isString: { errorMessage: "code should be string", bail: true },
             isLength: {
                 options: { min: 6, max: 6 },

@@ -4,7 +4,11 @@ import prisma from "../../../prismaClient/client";
 export const resetPasswordValidation = checkExact(
     checkSchema({
         email: {
-            exists: { errorMessage: "email is required", bail: true },
+            exists: {
+                errorMessage: "email is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
@@ -21,7 +25,11 @@ export const resetPasswordValidation = checkExact(
             },
         },
         code: {
-            exists: { errorMessage: "code is required", bail: true },
+            exists: {
+                errorMessage: "code is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isString: { errorMessage: "code should be string", bail: true },
             isLength: {
                 options: { min: 6, max: 6 },
@@ -29,7 +37,11 @@ export const resetPasswordValidation = checkExact(
             },
         },
         newPassword: {
-            exists: { errorMessage: "newPassword is required", bail: true },
+            exists: {
+                errorMessage: "newPassword is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isString: {
                 errorMessage: "newPassword should be string",
                 bail: true,

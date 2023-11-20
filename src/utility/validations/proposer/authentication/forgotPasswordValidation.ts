@@ -4,7 +4,11 @@ import prisma from "../../../prismaClient/client";
 export const forgotPasswordValidation = checkExact(
     checkSchema({
         email: {
-            exists: { errorMessage: "email is required", bail: true },
+            exists: {
+                errorMessage: "email is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
             isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
