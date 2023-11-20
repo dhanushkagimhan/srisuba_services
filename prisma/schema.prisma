@@ -28,6 +28,7 @@ enum ProposerStatus {
   PaymentApproved
   Active
   Reject
+  RejectionResolved
   Banned
 }
 
