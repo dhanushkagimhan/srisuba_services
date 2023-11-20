@@ -5,7 +5,8 @@ import prisma from "../../../prismaClient/client";
 export const emailVerifyValidation = checkExact(
     checkSchema({
         email: {
-            isEmail: { bail: true, errorMessage: "Please provide valid email" },
+            exists: { errorMessage: "email is required", bail: true },
+            isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
                     const proposer = await prisma.proposer.findUnique({
@@ -31,8 +32,8 @@ export const emailVerifyValidation = checkExact(
             },
         },
         code: {
-            exists: { errorMessage: "code is required" },
-            isString: { errorMessage: "code should be string" },
+            exists: { errorMessage: "code is required", bail: true },
+            isString: { errorMessage: "code should be string", bail: true },
             isLength: {
                 options: { min: 6, max: 6 },
                 errorMessage: "code should be 6 characters",
