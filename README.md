@@ -1,4 +1,4 @@
-# sirisuba_serives
+# sirisuba_services
 
 ## create docker progres db
 
@@ -18,10 +18,18 @@
 
 ## prisma
 
-### after schema updation run this command for db updation
+### after schema updating run this command for db updating
 
-`npx prisma migrate dev`
+`npx prisma migrate dev --skip-seed`
 
-### for the prisma client updation
+### for the prisma client updating
 
 `npx prisma generate`
+
+### seed database
+
+`npx prisma db seed`
+
+### Reset database
+
+`prisma migrate reset --skip-seed`
