@@ -105,7 +105,12 @@ export const createProposal = async (
         }
 
         const proposerUpdatingData: Prisma.ProposerUpdateInput = {
-            ...payload,
+            proposal: {
+                upsert: {
+                    create: payload,
+                    update: payload,
+                },
+            },
         };
 
         if (proposer.status === ProposerStatus.EmailVerified) {
