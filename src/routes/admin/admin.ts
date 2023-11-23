@@ -2,6 +2,7 @@ import express, { type Application, type RequestHandler } from "express";
 import * as commonValidation from "../../utility/validations/common";
 import * as adminValidation from "../../utility/validations/admin";
 import * as adminController from "../../controllers/admin";
+import protectedRouter from "./protected/protected";
 
 const adminRouter: Application = express();
 
@@ -15,6 +16,6 @@ adminRouter.post("/login-verify", [
     adminController.loginVerify,
 ] as RequestHandler[]);
 
-// proposerRouter.use("/p", protectedRouter);
+adminRouter.use("/p", protectedRouter);
 
 export default adminRouter;
