@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
     const systemData: Prisma.SystemCreateInput = {
-        name: process.env.SYSTEM_NAME ?? "srisuba",
+        name: "srisuba",
         adminEmail: process.env.ADMIN_EMAIL ?? "dhanushkagimhan@gmail.com",
         adminPassword: process.env.ADMIN_PASSWORD ?? "password",
         proposalPrice: 1500,
