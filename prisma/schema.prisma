@@ -33,16 +33,13 @@ enum ProposerStatus {
 }
 
 model Proposer {
-  id        Int    @id @default(autoincrement())
-  email     String @unique @db.VarChar(255)
-  password  String
-  firstName String
-  lastName  String
-
-  gender Gender
-
-  birthDay DateTime
-
+  id                   Int                       @id @default(autoincrement())
+  email                String                    @unique @db.VarChar(255)
+  password             String
+  firstName            String
+  lastName             String
+  gender               Gender
+  birthDay             DateTime
   status               ProposerStatus
   membershipExpiration DateTime
   createdAt            DateTime                  @default(now())
@@ -93,7 +90,7 @@ model Proposal {
   createdAt                DateTime       @default(now())
   updatedAt                DateTime       @updatedAt
   proposerId               Int            @unique
-  propoproposer            Proposer       @relation(fields: [proposerId], references: [id])
+  proposer                 Proposer       @relation(fields: [proposerId], references: [id])
 }
 
 enum ProposerPaymentType {

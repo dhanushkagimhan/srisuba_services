@@ -41,7 +41,7 @@ export const getProposals = async (
         const isOnlyExpired: boolean = req.query.isOnlyExpired === "true";
 
         console.log(
-            `{admin-getProposal} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}`,
+            `{admin-getProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}`,
         );
 
         const proposalStatusEnum: ProposerStatus | undefined =
