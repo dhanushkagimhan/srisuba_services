@@ -32,4 +32,4 @@
 
 ### Reset database
 
-`prisma migrate reset --skip-seed`
+`npx prisma migrate reset --skip-seed`
