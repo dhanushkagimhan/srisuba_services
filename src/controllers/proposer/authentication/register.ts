@@ -9,9 +9,9 @@ import {
     PaymentStatus,
 } from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
-import emailTransporter from "../../../utility/emailSender/emailTransporter";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import getProposalPrice from "../../../utility/commonMethods/getProposalPrice";
+import emailSender from "../../../utility/commonMethods/emailSender";
 
 type RequestPayload = {
     email: string;
@@ -128,23 +128,11 @@ export const register = async (
 
         console.log("{proposer-register} create proposer : ", createProposer);
 
-        const mailOptions = {
-            from: process.env.EMAIL_ADDRESS,
-            to: payload.email,
-            subject: "Srisuba - Email verification",
-            text: `your email verification code : ${emailVerifyCode}`,
-        };
-
-        emailTransporter.sendMail(mailOptions, function (error, info) {
-            if (error != null) {
-                console.log(error);
-            } else {
-                console.log(
-                    "{proposer-register} verification Email sent: " +
-                        info.response,
-                );
-            }
-        });
+        emailSender(
+            payload.email,
+            "Srisuba - Email verification",
+            `your email verification code : ${emailVerifyCode}`,
+        );
 
         const responseData: ApiResponse = {
             success: true,

@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
-import emailTransporter from "../../../utility/emailSender/emailTransporter";
+import emailSender from "../../../utility/commonMethods/emailSender";
 
 type RequestPayload = {
     email: string;
@@ -71,23 +71,11 @@ export const regenerateEmailVerify = async (
             emailVerificationUpdate,
         );
 
-        const mailOptions = {
-            from: process.env.EMAIL_ADDRESS,
-            to: payload.email,
-            subject: "Srisuba - Email verification",
-            text: `your email verification code : ${emailVerifyCode}`,
-        };
-
-        emailTransporter.sendMail(mailOptions, function (error, info) {
-            if (error != null) {
-                console.log(error);
-            } else {
-                console.log(
-                    "{proposer-regenerateEmailVerify} verification Email sent: " +
-                        info.response,
-                );
-            }
-        });
+        emailSender(
+            payload.email,
+            "Srisuba - Email verification",
+            `your email verification code : ${emailVerifyCode}`,
+        );
 
         const responseData: ApiResponse = {
             success: true,

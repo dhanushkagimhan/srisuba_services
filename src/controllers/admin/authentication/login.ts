@@ -3,8 +3,8 @@ import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import { type ValidationError, validationResult } from "express-validator";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
-import emailTransporter from "../../../utility/emailSender/emailTransporter";
 import { type Prisma } from "@prisma/client";
+import emailSender from "../../../utility/commonMethods/emailSender";
 
 type RequestPayload = {
     email: string;
@@ -100,22 +100,11 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             adminEmailVerifyData,
         );
 
-        const mailOptions = {
-            from: process.env.EMAIL_ADDRESS,
-            to: payload.email,
-            subject: "Srisuba - Admin verification",
-            text: `verification code : ${emailVerifyCode}`,
-        };
-
-        emailTransporter.sendMail(mailOptions, function (error, info) {
-            if (error != null) {
-                console.log(error);
-            } else {
-                console.log(
-                    "{admin-login} verification Email sent: " + info.response,
-                );
-            }
-        });
+        emailSender(
+            payload.email,
+            "Srisuba - Admin verification",
+            `verification code : ${emailVerifyCode}`,
+        );
 
         const responseData: ApiResponse = {
             success: true,
