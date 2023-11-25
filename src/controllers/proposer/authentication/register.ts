@@ -10,7 +10,7 @@ import {
 } from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
-import getProposalPrice from "../../../utility/commonMethods/getProposalPrice";
+import proposalPriceGetter from "../../../utility/commonMethods/proposalPriceGetter";
 import emailSender from "../../../utility/commonMethods/emailSender";
 
 type RequestPayload = {
@@ -50,7 +50,7 @@ export const register = async (
             return res.status(400).send(responseData);
         }
 
-        const proposalPrice: number = await getProposalPrice();
+        const proposalPrice: number = await proposalPriceGetter();
 
         const saltRound = 8;
         const hashPassword: string = await bcrypt.hash(
