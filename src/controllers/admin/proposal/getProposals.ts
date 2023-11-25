@@ -1,6 +1,12 @@
 import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
-import { type Gender, type Prisma, ProposerStatus } from "@prisma/client";
+import {
+    type Gender,
+    type Prisma,
+    ProposerStatus,
+    type ProposerPaymentType,
+    type PaymentStatus,
+} from "@prisma/client";
 
 type ApiResponse = {
     success: boolean;
@@ -15,6 +21,11 @@ type ApiResponse = {
         membershipExpiration: Date;
         createdAt: Date;
         updatedAt: Date;
+        payments?: Array<{
+            type: ProposerPaymentType;
+            value: number;
+            status: PaymentStatus;
+        }>;
     }>;
     message?: string;
     pagination?: {
@@ -39,9 +50,11 @@ export const getProposals = async (
                 ? req.query.proposerStatus
                 : undefined;
         const isOnlyExpired: boolean = req.query.isOnlyExpired === "true";
+        const isIncludePayments: boolean =
+            req.query.isIncludePayments === "true";
 
         console.log(
-            `{admin-getProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}`,
+            `{admin-getProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}, ${isIncludePayments}`,
         );
 
         const proposalStatusEnum: ProposerStatus | undefined =
@@ -73,6 +86,16 @@ export const getProposals = async (
                 updatedAt: true,
             },
         };
+
+        if (isIncludePayments && proposalsSelect.select != null) {
+            proposalsSelect.select.payments = {
+                select: {
+                    type: true,
+                    value: true,
+                    status: true,
+                },
+            };
+        }
 
         if (proposalStatusEnum != null || isOnlyExpired) {
             const proposalwhereSelect: Prisma.ProposerWhereInput = {};
