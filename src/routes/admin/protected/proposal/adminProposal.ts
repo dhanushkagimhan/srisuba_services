@@ -2,13 +2,13 @@ import express, { type Application, type RequestHandler } from "express";
 import * as adminController from "../../../../controllers/admin";
 import * as commonValidation from "../../../../utility/validations/common";
 
-const proposalRouter: Application = express();
+const adminProposalRouter: Application = express();
 
-proposalRouter.get("/", adminController.getProposals as RequestHandler);
+adminProposalRouter.get("/", adminController.getProposals as RequestHandler);
 
-proposalRouter.get("/:proposerId", [
+adminProposalRouter.get("/:proposerId", [
     commonValidation.getProposalValidation,
     adminController.getProposal,
 ] as RequestHandler[]);
 
-export default proposalRouter;
+export default adminProposalRouter;

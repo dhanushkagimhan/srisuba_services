@@ -2,7 +2,7 @@ import express, { type RequestHandler, type Application } from "express";
 import * as proposerController from "../../controllers/proposer";
 import * as proposerValidation from "../../utility/validations/proposer";
 import * as commonValidation from "../../utility/validations/common";
-import protectedRouter from "./protected/protected";
+import proposerProtectedRouter from "./protected/proposerProtected";
 
 const proposerRouter: Application = express();
 
@@ -36,6 +36,6 @@ proposerRouter.post("/login", [
     proposerController.login,
 ] as RequestHandler[]);
 
-proposerRouter.use("/p", protectedRouter);
+proposerRouter.use("/p", proposerProtectedRouter);
 
 export default proposerRouter;

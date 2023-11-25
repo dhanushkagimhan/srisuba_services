@@ -10,15 +10,15 @@ import { Role } from "../../../utility/types";
 import * as proposerController from "../../../controllers/proposer";
 import * as proposerValidation from "../../../utility/validations/proposer";
 
-const protectedRouter: Application = express();
+const proposerProtectedRouter: Application = express();
 
-protectedRouter.use((req: Request, res: Response, next: NextFunction) =>
+proposerProtectedRouter.use((req: Request, res: Response, next: NextFunction) =>
     auth(req, res, next, Role.Proposer),
 );
 
-protectedRouter.post("/proposal", [
+proposerProtectedRouter.post("/proposal", [
     proposerValidation.createProposalValidation,
     proposerController.createProposal,
 ] as RequestHandler[]);
 
-export default protectedRouter;
+export default proposerProtectedRouter;
