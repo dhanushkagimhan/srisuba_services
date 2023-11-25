@@ -215,15 +215,15 @@ model MarketerForgotPassword {
 }
 
 model MarketerReferredProposal {
-  id           Int               @id @default(autoincrement())
-  paymentValue Int
-  status       PaymentStatus
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
-  marketerId   Int
-  marketer     AffiliateMarketer @relation(fields: [marketerId], references: [id])
-  proposerId   Int               @unique
-  proposer     Proposer          @relation(fields: [proposerId], references: [id])
+  id            Int               @id @default(autoincrement())
+  paymentValue  Int
+  paymentStatus PaymentStatus
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  marketerId    Int
+  marketer      AffiliateMarketer @relation(fields: [marketerId], references: [id])
+  proposerId    Int               @unique
+  proposer      Proposer          @relation(fields: [proposerId], references: [id])
 
   @@index([marketerId])
 }

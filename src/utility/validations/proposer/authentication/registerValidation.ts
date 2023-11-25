@@ -70,11 +70,14 @@ export const registerValidation = checkExact(
         },
         birthDay: {
             exists: {
-                errorMessage: "birthDay is required",
+                errorMessage: "birthDay is required (MM/DD/YYYY)",
                 options: { checkFalsy: true },
                 bail: true,
             },
-            isString: { errorMessage: "birthDay should be string", bail: true },
+            isString: {
+                errorMessage: "birthDay should be string (MM/DD/YYYY)",
+                bail: true,
+            },
             custom: {
                 options: (birthDay: string) => {
                     const dob = dayjs(birthDay);
@@ -86,7 +89,8 @@ export const registerValidation = checkExact(
                         return true;
                     }
                 },
-                errorMessage: "Age must be older than 18 years",
+                errorMessage:
+                    "Age must be older than 18 years (format - MM/DD/YYYY)",
             },
         },
         referralCode: {

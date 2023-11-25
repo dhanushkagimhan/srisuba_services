@@ -1,10 +1,17 @@
 import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
-import { ProposerStatus, type Prisma, type Gender } from "@prisma/client";
+import {
+    ProposerStatus,
+    type Prisma,
+    type Gender,
+    ProposerPaymentType,
+    PaymentStatus,
+} from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
 import emailTransporter from "../../../utility/emailSender/emailTransporter";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
+import getProposalPrice from "../../../utility/commonMethods/getProposalPrice";
 
 type RequestPayload = {
     email: string;
@@ -43,6 +50,8 @@ export const register = async (
             return res.status(400).send(responseData);
         }
 
+        const proposalPrice: number = await getProposalPrice();
+
         const saltRound = 8;
         const hashPassword: string = await bcrypt.hash(
             payload.password,
@@ -74,6 +83,13 @@ export const register = async (
                     expirationTime: emailVerificationCodeExpireTime,
                 },
             },
+            payments: {
+                create: {
+                    type: ProposerPaymentType.Initial,
+                    value: proposalPrice,
+                    status: PaymentStatus.Pending,
+                },
+            },
         };
 
         if (payload.referralCode != null) {
@@ -89,9 +105,13 @@ export const register = async (
             });
 
             if (aMarkerterId != null) {
+                const marketerPaymentValue = proposalPrice / 10;
+
                 newProposer.referredMarketer = {
                     create: {
                         marketerId: aMarkerterId.id,
+                        paymentValue: marketerPaymentValue,
+                        paymentStatus: PaymentStatus.Pending,
                     },
                 };
             }
