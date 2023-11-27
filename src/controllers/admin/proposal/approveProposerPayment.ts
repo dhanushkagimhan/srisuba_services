@@ -8,6 +8,7 @@ import {
     ProposerStatus,
 } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import dayjs from "dayjs";
 
 type RequestPayload = {
     proposerId: number;
@@ -45,6 +46,7 @@ export const approveProposerPayment = async (
             },
             select: {
                 status: true,
+                membershipExpiration: true,
                 payments: {
                     select: {
                         id: true,
@@ -91,6 +93,8 @@ export const approveProposerPayment = async (
             return res.status(400).send(responseData);
         }
 
+        const membershipExpirationRenew: Date = dayjs().add(92, "day").toDate();
+
         for (let i = 0; i < 5; i++) {
             console.log("{admin-approveProposerPayment} tranx tries : ", i + 1);
             try {
@@ -99,6 +103,7 @@ export const approveProposerPayment = async (
                         const proposerUpdated = await tx.proposer.update({
                             data: {
                                 status: ProposerStatus.PaymentApproved,
+                                membershipExpiration: membershipExpirationRenew,
                                 payments: {
                                     update: {
                                         data: {
@@ -116,6 +121,7 @@ export const approveProposerPayment = async (
                             select: {
                                 id: true,
                                 email: true,
+                                membershipExpiration: true,
                                 payments: {
                                     select: {
                                         id: true,
