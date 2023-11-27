@@ -5,7 +5,6 @@ import { ProposerStatus } from "@prisma/client";
 export const approvePaymentValidation = checkExact(
     checkSchema({
         proposerId: {
-            in: ["body"],
             exists: {
                 errorMessage: "proposerId is required",
                 options: { checkFalsy: true },
