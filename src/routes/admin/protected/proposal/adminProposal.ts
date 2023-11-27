@@ -5,7 +5,10 @@ import * as adminValidation from "../../../../utility/validations/admin";
 
 const adminProposalRouter: Application = express();
 
-adminProposalRouter.get("/", adminController.getProposals as RequestHandler);
+adminProposalRouter.get("/", [
+    adminValidation.getAllProposalsValidation,
+    adminController.getProposals,
+] as RequestHandler[]);
 
 adminProposalRouter.get("/:proposerId", [
     commonValidation.getProposalValidation,

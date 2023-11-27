@@ -7,6 +7,7 @@ import {
     type ProposerPaymentType,
     type PaymentStatus,
 } from "@prisma/client";
+import { type ValidationError, validationResult } from "express-validator";
 
 type ApiResponse = {
     success: boolean;
@@ -28,6 +29,7 @@ type ApiResponse = {
         }>;
     }>;
     message?: string;
+    errors?: ValidationError[];
     pagination?: {
         totalCount: number;
         count: number;
@@ -41,6 +43,17 @@ export const getProposals = async (
     res: Response,
 ): Promise<Response> => {
     try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "validation failed",
+                errors: errors.array(),
+            };
+            return res.status(400).send(responseData);
+        }
+
         const pageNumber: number =
             Number(req.query.page) > 0 ? Number(req.query.page) : 1;
         const pageSize: number =
