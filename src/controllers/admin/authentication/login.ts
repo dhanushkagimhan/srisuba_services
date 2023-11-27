@@ -19,8 +19,6 @@ type ApiResponse = {
 
 export const login = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const payload: RequestPayload = req.body;
-
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -31,6 +29,8 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             };
             return res.status(400).send(responseData);
         }
+
+        const payload: RequestPayload = req.body;
 
         console.log("{admin-login} payload : ", payload);
 

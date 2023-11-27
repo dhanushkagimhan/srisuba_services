@@ -55,8 +55,6 @@ export const createProposal = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: RequestPayload = req.body;
-
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -67,6 +65,8 @@ export const createProposal = async (
             };
             return res.status(400).send(responseData);
         }
+
+        const payload: RequestPayload = req.body;
 
         console.log("{proposer-createProposal} payload : ", payload);
 

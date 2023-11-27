@@ -37,8 +37,6 @@ export const register = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: RequestPayload = req.body;
-
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -49,6 +47,8 @@ export const register = async (
             };
             return res.status(400).send(responseData);
         }
+
+        const payload: RequestPayload = req.body;
 
         const proposalPrice: number = await proposalPriceGetter();
 

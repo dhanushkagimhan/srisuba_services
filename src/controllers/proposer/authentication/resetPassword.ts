@@ -20,8 +20,6 @@ export const resetPassword = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const payload: RequestPayload = req.body;
-
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -32,6 +30,8 @@ export const resetPassword = async (
             };
             return res.status(400).send(responseData);
         }
+
+        const payload: RequestPayload = req.body;
 
         console.log("{proposer-resetPassword} payload : ", payload);
 
