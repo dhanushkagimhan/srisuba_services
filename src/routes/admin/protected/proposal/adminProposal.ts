@@ -20,4 +20,9 @@ adminProposalRouter.post("/approve-payment", [
     adminController.approveProposerPayment,
 ] as RequestHandler[]);
 
+adminProposalRouter.post("/change-status", [
+    adminValidation.changeProposerStatusValidation,
+    adminController.changeProposerStatus,
+] as RequestHandler[]);
+
 export default adminProposalRouter;
