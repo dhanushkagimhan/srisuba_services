@@ -9,4 +9,9 @@ proposerProposalRouter.post("/", [
     proposerController.createProposal,
 ] as RequestHandler[]);
 
+proposerProposalRouter.get("/block-reason", [
+    proposerValidation.getBlockReasonValidation,
+    proposerController.getBlockReason,
+] as RequestHandler[]);
+
 export default proposerProposalRouter;

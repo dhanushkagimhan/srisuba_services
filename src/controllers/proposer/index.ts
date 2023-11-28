@@ -5,6 +5,7 @@ import { forgotPassword } from "./authentication/forgotPassword";
 import { resetPassword } from "./authentication/resetPassword";
 import { login } from "./authentication/login";
 import { createProposal } from "./proposal/createProposal";
+import { getBlockReason } from "./proposal/getBlockReason";
 
 export {
     register,
@@ -14,4 +15,5 @@ export {
     resetPassword,
     login,
     createProposal,
+    getBlockReason,
 };
