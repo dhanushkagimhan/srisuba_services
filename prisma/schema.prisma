@@ -45,7 +45,7 @@ model Proposer {
   createdAt            DateTime                  @default(now())
   updatedAt            DateTime                  @updatedAt
   proposing            MatchingProposal[]        @relation("proposeReceiving")
-  proposeBy            MatchingProposal[]        @relation("proposing")
+  proposeReceiving     MatchingProposal[]        @relation("proposing")
   rejectOrBannedReason RejectOrBannedReason?
   emailVerify          ProposerEmailVerify?
   forgotPassword       ProposerForgotPassword?
