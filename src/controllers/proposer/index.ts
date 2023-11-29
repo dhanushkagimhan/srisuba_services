@@ -7,6 +7,7 @@ import { login } from "./authentication/login";
 import { createProposal } from "./proposal/createProposal";
 import { getBlockReason } from "./proposal/getBlockReason";
 import { getProposals } from "./proposal/getProposals";
+import { getMyProposal } from "./proposal/getMyProposal";
 
 export {
     register,
@@ -18,4 +19,5 @@ export {
     createProposal,
     getBlockReason,
     getProposals,
+    getMyProposal,
 };

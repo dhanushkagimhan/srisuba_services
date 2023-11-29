@@ -5,7 +5,7 @@ import * as commonValidation from "../../../utility/validations/common";
 const commonProposalRouter: Application = express();
 
 commonProposalRouter.get("/price", [
-    commonValidation.getProposalPriceValidation,
+    commonValidation.withoutAnyArgsValidation,
     commonController.getProposalPrice,
 ] as RequestHandler[]);
 

@@ -1,5 +1,5 @@
 import { loginValidation } from "./authentication/loginValidation";
-import { getProposalPriceValidation } from "./proposal/getProposalPriceValidation";
+import { withoutAnyArgsValidation } from "./withoutAnyArg/withoutAnyArgsValidation";
 import { getProposalValidation } from "./proposal/getProposalValidation";
 
-export { loginValidation, getProposalValidation, getProposalPriceValidation };
+export { loginValidation, getProposalValidation, withoutAnyArgsValidation };
