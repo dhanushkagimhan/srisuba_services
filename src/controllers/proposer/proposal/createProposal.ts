@@ -101,7 +101,7 @@ export const createProposal = async (
                 success: false,
                 message: "proposer status is not support to this request",
             };
-            return res.status(403).send(responseData);
+            return res.status(400).send(responseData);
         }
 
         const proposerUpdatingData: Prisma.ProposerUpdateInput = {
