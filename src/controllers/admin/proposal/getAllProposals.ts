@@ -38,7 +38,7 @@ type ApiResponse = {
     };
 };
 
-export const getProposals = async (
+export const getAllProposals = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -67,7 +67,7 @@ export const getProposals = async (
             req.query.isIncludePayments === "true";
 
         console.log(
-            `{admin-getProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}, ${isIncludePayments}`,
+            `{admin-getAllProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}, ${isIncludePayments}`,
         );
 
         const proposalStatusEnum: ProposerStatus | undefined =
@@ -133,7 +133,10 @@ export const getProposals = async (
             prisma.proposer.count({ where: proposalsSelect.where }),
         ]);
 
-        console.log("{Admin - getProposals} proposers response : ", proposers);
+        console.log(
+            "{Admin - getAllProposals} proposers response : ",
+            proposers,
+        );
 
         const responseData: ApiResponse = {
             success: true,
@@ -148,7 +151,7 @@ export const getProposals = async (
 
         return res.status(200).send(responseData);
     } catch (error) {
-        console.log(`Unexpected Error {admin-getProposals} : ${error}`);
+        console.log(`Unexpected Error {admin-getAllProposals} : ${error}`);
         const responseData: ApiResponse = {
             success: false,
             message: "system Error",

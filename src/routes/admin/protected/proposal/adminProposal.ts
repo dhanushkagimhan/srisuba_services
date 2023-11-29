@@ -7,7 +7,7 @@ const adminProposalRouter: Application = express();
 
 adminProposalRouter.get("/", [
     adminValidation.getAllProposalsValidation,
-    adminController.getProposals,
+    adminController.getAllProposals,
 ] as RequestHandler[]);
 
 adminProposalRouter.get("/:proposerId", [
