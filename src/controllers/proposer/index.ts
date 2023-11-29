@@ -8,6 +8,7 @@ import { createProposal } from "./proposal/createProposal";
 import { getBlockReason } from "./proposal/getBlockReason";
 import { getProposals } from "./proposal/getProposals";
 import { getMyProposal } from "./proposal/getMyProposal";
+import { getOtherProposal } from "./proposal/getOtherProposal";
 
 export {
     register,
@@ -20,4 +21,5 @@ export {
     getBlockReason,
     getProposals,
     getMyProposal,
+    getOtherProposal,
 };
