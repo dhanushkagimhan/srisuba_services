@@ -79,7 +79,11 @@ export const getOtherProposal = async (
         }
 
         if (myProposerId === proposerId) {
-            throw new Error("Try to take own proposer with this API");
+            const responseData: ApiResponse = {
+                success: false,
+                message: "You can not take the your own proposal with this API",
+            };
+            return res.status(400).send(responseData);
         }
 
         const myGender: Gender | undefined = res.locals.proposerGender;
