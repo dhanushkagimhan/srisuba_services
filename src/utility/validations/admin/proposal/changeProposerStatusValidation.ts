@@ -16,10 +16,13 @@ export const changeProposerStatusValidation = checkExact(
                 bail: true,
             },
             custom: {
-                options: async (proposerId: number) => {
+                options: async (proposerId) => {
+                    if (!Number.isInteger(proposerId)) {
+                        throw new Error("proposerId should be type number");
+                    }
                     const proposer = await prisma.proposer.findUnique({
                         where: {
-                            id: Number(proposerId),
+                            id: proposerId,
                         },
                         select: {
                             status: true,
