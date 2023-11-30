@@ -5,6 +5,7 @@ import {
     type Gender,
     type FoodPreference,
     MatchingProposalStatus,
+    ProposerStatus,
 } from "@prisma/client";
 
 type ProposerResponse = {
@@ -99,6 +100,8 @@ export const getOtherProposal = async (
             select: {
                 birthDay: true,
                 gender: true,
+                status: true,
+                membershipExpiration: true,
                 proposal: {
                     select: {
                         profilePhoto: true,
@@ -163,6 +166,22 @@ export const getOtherProposal = async (
 
         if (proposal.gender === myGender) {
             throw new Error("try to take same gender proposal");
+        }
+
+        if (proposal.status !== ProposerStatus.Active) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Proposal is not Active",
+            };
+            return res.status(400).send(responseData);
+        }
+
+        if (proposal.membershipExpiration < new Date()) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Proposal is expired",
+            };
+            return res.status(400).send(responseData);
         }
 
         const proposerResponse: ProposerResponse = proposal.proposal;
