@@ -1,7 +1,11 @@
 import { type Request, type Response } from "express";
 import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
-import { ProposerStatus, MatchingProposalStatus } from "@prisma/client";
+import {
+    ProposerStatus,
+    MatchingProposalStatus,
+    type Gender,
+} from "@prisma/client";
 
 type RejectRequest = {
     id: number;
@@ -46,12 +50,19 @@ export const sendRequest = async (
             throw new Error("res local not have valid proposerId");
         }
 
+        const myGender: Gender | undefined = res.locals.proposerGender;
+
+        if (myGender == null) {
+            throw new Error("res local not have valid proposerGender");
+        }
+
         const proposer = await prisma.proposer.findUnique({
             where: {
                 id: payload.proposerId,
             },
             select: {
                 status: true,
+                gender: true,
                 membershipExpiration: true,
                 proposing: {
                     where: {
@@ -99,6 +110,14 @@ export const sendRequest = async (
             const responseData: ApiResponse = {
                 success: false,
                 message: "proposer membership is expired",
+            };
+            return res.status(400).send(responseData);
+        }
+
+        if (proposer.gender === myGender) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Invalid gender",
             };
             return res.status(400).send(responseData);
         }

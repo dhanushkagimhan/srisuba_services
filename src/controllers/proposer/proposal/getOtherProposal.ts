@@ -165,7 +165,11 @@ export const getOtherProposal = async (
         }
 
         if (proposal.gender === myGender) {
-            throw new Error("try to take same gender proposal");
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Invalid gender",
+            };
+            return res.status(400).send(responseData);
         }
 
         if (proposal.status !== ProposerStatus.Active) {
