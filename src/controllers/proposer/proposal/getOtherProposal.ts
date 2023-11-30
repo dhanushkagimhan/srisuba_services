@@ -4,7 +4,7 @@ import { type ValidationError, validationResult } from "express-validator";
 import {
     type Gender,
     type FoodPreference,
-    type MatchingProposalStatus,
+    MatchingProposalStatus,
 } from "@prisma/client";
 
 type ProposerResponse = {
@@ -12,7 +12,7 @@ type ProposerResponse = {
     otherPictures: string[] | null;
     bioTitle: string | null;
     bioDescription: string | null;
-    whatsAppNumber: string;
+    whatsAppNumber?: string;
     ethnicity: string;
     religion: string;
     caste: string | null;
@@ -39,6 +39,7 @@ type ProposerResponse = {
     motherCountryOfResidence: string;
     motherAdditionalInfo: string | null;
     horoscopeMatching: boolean;
+    birthDay?: Date;
     connection?: {
         status: MatchingProposalStatus;
     };
@@ -92,6 +93,7 @@ export const getOtherProposal = async (
                 id: proposerId,
             },
             select: {
+                birthDay: true,
                 gender: true,
                 proposal: {
                     select: {
@@ -169,6 +171,15 @@ export const getOtherProposal = async (
             proposerResponse.connection = {
                 status: proposal.proposeReceiving[0].status,
             };
+        }
+
+        if (
+            proposerResponse.connection != null &&
+            proposerResponse.connection.status === MatchingProposalStatus.Accept
+        ) {
+            proposerResponse.birthDay = proposal.birthDay;
+        } else {
+            delete proposerResponse.whatsAppNumber;
         }
 
         const responseData: ApiResponse = {
