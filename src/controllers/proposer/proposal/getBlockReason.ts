@@ -58,7 +58,7 @@ export const getBlockReason = async (
         }
 
         if (
-            proposer.status !== ProposerStatus.Reject &&
+            proposer.status !== ProposerStatus.Rejected &&
             proposer.status !== ProposerStatus.Banned
         ) {
             const responseData: ApiResponse = {

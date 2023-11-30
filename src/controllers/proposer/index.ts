@@ -9,6 +9,7 @@ import { getBlockReason } from "./proposal/getBlockReason";
 import { getProposals } from "./proposal/getProposals";
 import { getMyProposal } from "./proposal/getMyProposal";
 import { getOtherProposal } from "./proposal/getOtherProposal";
+import { sendRequest } from "./connection/sendRequest";
 
 export {
     register,
@@ -22,4 +23,5 @@ export {
     getProposals,
     getMyProposal,
     getOtherProposal,
+    sendRequest,
 };

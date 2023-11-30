@@ -33,7 +33,7 @@ export const changeProposerStatusValidation = checkExact(
                     if (
                         proposer.status !== ProposerStatus.PaymentApproved &&
                         proposer.status !== ProposerStatus.Active &&
-                        proposer.status !== ProposerStatus.Reject &&
+                        proposer.status !== ProposerStatus.Rejected &&
                         proposer.status !== ProposerStatus.RejectionResolved &&
                         proposer.status !== ProposerStatus.Banned
                     ) {
@@ -58,7 +58,7 @@ export const changeProposerStatusValidation = checkExact(
                 options: (status: string) => {
                     if (
                         status !== ProposerStatus.Active &&
-                        status !== ProposerStatus.Reject &&
+                        status !== ProposerStatus.Rejected &&
                         status !== ProposerStatus.Banned
                     ) {
                         throw new Error("new proposer status is not valid");

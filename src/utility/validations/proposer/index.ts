@@ -6,6 +6,7 @@ import { resetPasswordValidation } from "./authentication/resetPasswordValidatio
 import { createProposalValidation } from "./proposal/createProposalValidation";
 import { getBlockReasonValidation } from "./proposal/getBlockReasonValidation";
 import { getProposalsValidation } from "./proposal/getProposalsValidation";
+import { proposerIdPostMAValidation } from "./connection/proposerIdPostMAValidation";
 
 export {
     registerValidation,
@@ -16,4 +17,5 @@ export {
     createProposalValidation,
     getBlockReasonValidation,
     getProposalsValidation,
+    proposerIdPostMAValidation,
 };

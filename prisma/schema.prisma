@@ -27,7 +27,7 @@ enum ProposerStatus {
   PendingPayment
   PaymentApproved
   Active
-  Reject
+  Rejected
   RejectionResolved
   Banned
   BannedResolved
@@ -45,8 +45,8 @@ model Proposer {
   membershipExpiration DateTime
   createdAt            DateTime                  @default(now())
   updatedAt            DateTime                  @updatedAt
-  proposing            MatchingProposal[]        @relation("proposeReceiving")
-  proposeReceiving     MatchingProposal[]        @relation("proposing")
+  proposing            MatchingProposal[]        @relation("proposing")
+  proposeReceiving     MatchingProposal[]        @relation("proposeReceiving")
   rejectOrBannedReason RejectOrBannedReason?
   emailVerify          ProposerEmailVerify?
   forgotPassword       ProposerForgotPassword?
@@ -117,7 +117,8 @@ model ProposerPayment {
 
 enum MatchingProposalStatus {
   Pending
-  Accept
+  Accepted
+  Rejected
 }
 
 model MatchingProposal {

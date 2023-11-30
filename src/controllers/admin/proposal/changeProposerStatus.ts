@@ -36,7 +36,7 @@ export const changeProposerStatus = async (
         console.log("admin-changeProposerStatus} payload :", payload);
 
         if (
-            payload.status !== ProposerStatus.Reject &&
+            payload.status !== ProposerStatus.Rejected &&
             payload.status !== ProposerStatus.Banned &&
             payload.reason != null
         ) {

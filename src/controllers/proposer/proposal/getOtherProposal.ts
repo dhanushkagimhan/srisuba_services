@@ -198,7 +198,8 @@ export const getOtherProposal = async (
 
         if (
             proposerResponse.connection != null &&
-            proposerResponse.connection.status === MatchingProposalStatus.Accept
+            proposerResponse.connection.status ===
+                MatchingProposalStatus.Accepted
         ) {
             proposerResponse.birthDay = proposal.birthDay;
         } else {

@@ -95,7 +95,7 @@ export const createProposal = async (
 
         if (
             proposer.status !== ProposerStatus.EmailVerified &&
-            proposer.status !== ProposerStatus.Reject
+            proposer.status !== ProposerStatus.Rejected
         ) {
             const responseData: ApiResponse = {
                 success: false,
