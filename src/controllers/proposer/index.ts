@@ -13,6 +13,7 @@ import { sendRequest } from "./connection/sendRequest";
 import { getReceivedRequests } from "./connection/getReceivedRequests";
 import { getSentRequests } from "./connection/getSentRequests";
 import { acceptOrRejectRequest } from "./connection/acceptOrRejectRequest";
+import { getPartners } from "./connection/getPartners";
 
 export {
     register,
@@ -30,4 +31,5 @@ export {
     getReceivedRequests,
     getSentRequests,
     acceptOrRejectRequest,
+    getPartners,
 };

@@ -25,4 +25,9 @@ proposerMAConnectionRouter.post("/request-acceptation", [
     proposerController.acceptOrRejectRequest,
 ] as RequestHandler[]);
 
+proposerMAConnectionRouter.get("/partners", [
+    commonValidation.withoutAnyArgsValidation,
+    proposerController.getPartners,
+] as RequestHandler[]);
+
 export default proposerMAConnectionRouter;
