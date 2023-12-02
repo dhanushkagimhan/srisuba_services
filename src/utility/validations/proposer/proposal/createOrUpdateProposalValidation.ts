@@ -1,7 +1,7 @@
 import { FoodPreference } from "@prisma/client";
 import { checkExact, checkSchema } from "express-validator";
 
-export const createProposalValidation = checkExact(
+export const createOrUpdateProposalValidation = checkExact(
     checkSchema({
         profilePhoto: {
             exists: {

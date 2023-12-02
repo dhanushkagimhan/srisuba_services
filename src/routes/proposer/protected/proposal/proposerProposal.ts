@@ -6,8 +6,8 @@ import * as commonValidation from "../../../../utility/validations/common";
 const proposerProposalRouter: Application = express();
 
 proposerProposalRouter.post("/", [
-    proposerValidation.createProposalValidation,
-    proposerController.createProposal,
+    proposerValidation.createOrUpdateProposalValidation,
+    proposerController.createOrUpdateProposal,
 ] as RequestHandler[]);
 
 proposerProposalRouter.get("/block-reason", [

@@ -50,7 +50,7 @@ type ApiResponse = {
     errors?: ValidationError[];
 };
 
-export const createProposal = async (
+export const createOrUpdateProposal = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -68,7 +68,7 @@ export const createProposal = async (
 
         const payload: RequestPayload = req.body;
 
-        console.log("{proposer-createProposal} payload : ", payload);
+        console.log("{proposer-createOrUpdateProposal} payload : ", payload);
 
         console.log("res locals", res.locals.proposerId);
 
@@ -87,7 +87,10 @@ export const createProposal = async (
             },
         });
 
-        console.log("found proposer data {createProposal} : ", proposer);
+        console.log(
+            "found proposer data {createOrUpdateProposal} : ",
+            proposer,
+        );
 
         if (proposer == null) {
             throw new Error("proposer data not found");
@@ -95,7 +98,9 @@ export const createProposal = async (
 
         if (
             proposer.status !== ProposerStatus.EmailVerified &&
-            proposer.status !== ProposerStatus.Rejected
+            proposer.status !== ProposerStatus.Rejected &&
+            proposer.status !== ProposerStatus.Banned &&
+            proposer.status !== ProposerStatus.Active
         ) {
             const responseData: ApiResponse = {
                 success: false,
@@ -115,8 +120,10 @@ export const createProposal = async (
 
         if (proposer.status === ProposerStatus.EmailVerified) {
             proposerUpdatingData.status = ProposerStatus.PendingPayment;
-        } else {
+        } else if (proposer.status === ProposerStatus.Rejected) {
             proposerUpdatingData.status = ProposerStatus.RejectionResolved;
+        } else if (proposer.status === ProposerStatus.Banned) {
+            proposerUpdatingData.status = ProposerStatus.BannedResolved;
         }
 
         const proposerUpdate = await prisma.proposer.update({
@@ -132,7 +139,7 @@ export const createProposal = async (
         });
 
         console.log(
-            "proposer update {proposer-createProposal} : ",
+            "proposer update {proposer-createOrUpdateProposal} : ",
             proposerUpdate,
         );
 
@@ -145,7 +152,9 @@ export const createProposal = async (
 
         return res.status(200).send(responseData);
     } catch (error) {
-        console.log(`Unexpected Error {proposer-createProposal} : ${error}`);
+        console.log(
+            `Unexpected Error {proposer-createOrUpdateProposal} : ${error}`,
+        );
         const responseData: ApiResponse = {
             success: false,
             message: "system Error",

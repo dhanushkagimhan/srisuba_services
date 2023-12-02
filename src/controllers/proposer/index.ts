@@ -4,7 +4,7 @@ import { register } from "./authentication/register";
 import { forgotPassword } from "./authentication/forgotPassword";
 import { resetPassword } from "./authentication/resetPassword";
 import { login } from "./authentication/login";
-import { createProposal } from "./proposal/createProposal";
+import { createOrUpdateProposal } from "./proposal/createOrUpdateProposal";
 import { getBlockReason } from "./proposal/getBlockReason";
 import { getProposals } from "./proposal/getProposals";
 import { getMyProposal } from "./proposal/getMyProposal";
@@ -19,7 +19,7 @@ export {
     forgotPassword,
     resetPassword,
     login,
-    createProposal,
+    createOrUpdateProposal,
     getBlockReason,
     getProposals,
     getMyProposal,

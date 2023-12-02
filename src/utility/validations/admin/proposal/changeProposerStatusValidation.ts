@@ -38,7 +38,8 @@ export const changeProposerStatusValidation = checkExact(
                         proposer.status !== ProposerStatus.Active &&
                         proposer.status !== ProposerStatus.Rejected &&
                         proposer.status !== ProposerStatus.RejectionResolved &&
-                        proposer.status !== ProposerStatus.Banned
+                        proposer.status !== ProposerStatus.Banned &&
+                        proposer.status !== ProposerStatus.BannedResolved
                     ) {
                         throw new Error(
                             `proposer status is not valid - (current proposer status : ${proposer.status})`,

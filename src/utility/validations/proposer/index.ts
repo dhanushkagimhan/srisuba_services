@@ -3,7 +3,7 @@ import { regenerateEmailVerifyValidation } from "./authentication/regenerateEmai
 import { registerValidation } from "./authentication/registerValidation";
 import { forgotPasswordValidation } from "./authentication/forgotPasswordValidation";
 import { resetPasswordValidation } from "./authentication/resetPasswordValidation";
-import { createProposalValidation } from "./proposal/createProposalValidation";
+import { createOrUpdateProposalValidation } from "./proposal/createOrUpdateProposalValidation";
 import { getBlockReasonValidation } from "./proposal/getBlockReasonValidation";
 import { getProposalsValidation } from "./proposal/getProposalsValidation";
 import { proposerIdPostMAValidation } from "./connection/proposerIdPostMAValidation";
@@ -14,7 +14,7 @@ export {
     regenerateEmailVerifyValidation,
     forgotPasswordValidation,
     resetPasswordValidation,
-    createProposalValidation,
+    createOrUpdateProposalValidation,
     getBlockReasonValidation,
     getProposalsValidation,
     proposerIdPostMAValidation,
