@@ -15,4 +15,9 @@ proposerMAConnectionRouter.get("/received-requests", [
     proposerController.getReceivedRequests,
 ] as RequestHandler[]);
 
+proposerMAConnectionRouter.get("/sent-requests", [
+    commonValidation.withoutAnyArgsValidation,
+    proposerController.getSentRequests,
+] as RequestHandler[]);
+
 export default proposerMAConnectionRouter;
