@@ -30,4 +30,9 @@ proposerMAConnectionRouter.get("/partners", [
     proposerController.getPartners,
 ] as RequestHandler[]);
 
+proposerMAConnectionRouter.get("/rejected-requests", [
+    commonValidation.withoutAnyArgsValidation,
+    proposerController.getRejectedRequests,
+] as RequestHandler[]);
+
 export default proposerMAConnectionRouter;
