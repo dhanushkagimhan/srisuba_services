@@ -60,6 +60,7 @@ export const approveProposerPayment = async (
                         id: true,
                         paymentStatus: true,
                         paymentValue: true,
+                        marketerId: true,
                     },
                 },
             },
@@ -156,6 +157,7 @@ export const approveProposerPayment = async (
                         totalSAccountBalance += proposer.payments[0].value;
 
                         let marketerReferredData;
+                        let marketerDate;
 
                         if (proposer.referredMarketer == null) {
                             sIncomeBalance += proposer.payments[0].value;
@@ -177,8 +179,26 @@ export const approveProposerPayment = async (
                                     select: {
                                         id: true,
                                         paymentStatus: true,
+                                        marketer: {
+                                            select: {
+                                                accountBalance: true,
+                                            },
+                                        },
                                     },
                                 });
+
+                            const marketerAccountBalance =
+                                marketerReferredData.marketer.accountBalance +
+                                proposer.referredMarketer.paymentValue;
+
+                            marketerDate = await tx.affiliateMarketer.update({
+                                where: {
+                                    id: proposer.referredMarketer.marketerId,
+                                },
+                                data: {
+                                    accountBalance: marketerAccountBalance,
+                                },
+                            });
                         }
 
                         const systemUpdated = await tx.system.update({
@@ -201,6 +221,7 @@ export const approveProposerPayment = async (
                         return [
                             proposerUpdated,
                             marketerReferredData,
+                            marketerDate,
                             systemUpdated,
                         ];
                     },
@@ -209,6 +230,7 @@ export const approveProposerPayment = async (
                             Prisma.TransactionIsolationLevel.Serializable,
                     },
                 );
+
                 for (const j of txResponse) {
                     console.log(
                         "{admin-approveProposerPayment} tranx successfully : ",
