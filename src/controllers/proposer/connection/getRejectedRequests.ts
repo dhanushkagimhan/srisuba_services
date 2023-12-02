@@ -9,6 +9,7 @@ type RejectedRequest = {
     firstName: string;
     lastName: string;
     receiverId: number;
+    isIPropose: boolean;
 };
 
 type ApiResponse = {
@@ -77,6 +78,36 @@ export const getRejectedRequests = async (
                         },
                     },
                 },
+                proposeReceiving: {
+                    where: {
+                        AND: [
+                            { status: MatchingProposalStatus.Rejected },
+                            {
+                                proposer: {
+                                    AND: [
+                                        { status: ProposerStatus.Active },
+                                        {
+                                            membershipExpiration: {
+                                                gt: new Date(),
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        ],
+                    },
+                    select: {
+                        id: true,
+                        status: true,
+                        proposerId: true,
+                        proposer: {
+                            select: {
+                                firstName: true,
+                                lastName: true,
+                            },
+                        },
+                    },
+                },
             },
         });
 
@@ -98,6 +129,18 @@ export const getRejectedRequests = async (
                 status: connectionRequest.status,
                 firstName: connectionRequest.proposeReceiver.firstName,
                 lastName: connectionRequest.proposeReceiver.lastName,
+                isIPropose: true,
+            });
+        }
+
+        for (const connectionRequest of proposer.proposeReceiving) {
+            rejectedRequests.push({
+                id: connectionRequest.id,
+                receiverId: connectionRequest.proposerId,
+                status: connectionRequest.status,
+                firstName: connectionRequest.proposer.firstName,
+                lastName: connectionRequest.proposer.lastName,
+                isIPropose: false,
             });
         }
 
