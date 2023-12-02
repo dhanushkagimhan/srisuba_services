@@ -8,6 +8,7 @@ import { auth } from "../../../middlewares/auth";
 import { Role } from "../../../utility/types";
 import proposerProposalRouter from "./proposal/proposerProposal";
 import membershipActiveRouter from "./membershipActiveRequired/membershipActive";
+import proposerProfileRouter from "./profile/proposerProfile";
 
 const proposerProtectedRouter: Application = express();
 
@@ -16,6 +17,8 @@ proposerProtectedRouter.use((req: Request, res: Response, next: NextFunction) =>
 );
 
 proposerProtectedRouter.use("/proposal", proposerProposalRouter);
+
+proposerProtectedRouter.use("/profile", proposerProfileRouter);
 
 proposerProtectedRouter.use("/m", membershipActiveRouter);
 

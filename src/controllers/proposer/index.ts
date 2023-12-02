@@ -15,6 +15,7 @@ import { getSentRequests } from "./connection/getSentRequests";
 import { acceptOrRejectRequest } from "./connection/acceptOrRejectRequest";
 import { getPartners } from "./connection/getPartners";
 import { getRejectedRequests } from "./connection/getRejectedRequests";
+import { editProfile } from "./profile/editProfile";
 
 export {
     register,
@@ -34,4 +35,5 @@ export {
     acceptOrRejectRequest,
     getPartners,
     getRejectedRequests,
+    editProfile,
 };
