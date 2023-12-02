@@ -69,7 +69,7 @@ export const getReceivedRequests = async (
                         id: true,
                         status: true,
                         proposerId: true,
-                        proposeReceiver: {
+                        proposer: {
                             select: {
                                 firstName: true,
                                 lastName: true,
@@ -96,8 +96,8 @@ export const getReceivedRequests = async (
                 id: connectionRequest.id,
                 proposerId: connectionRequest.proposerId,
                 status: connectionRequest.status,
-                firstName: connectionRequest.proposeReceiver.firstName,
-                lastName: connectionRequest.proposeReceiver.lastName,
+                firstName: connectionRequest.proposer.firstName,
+                lastName: connectionRequest.proposer.lastName,
             });
         }
 
