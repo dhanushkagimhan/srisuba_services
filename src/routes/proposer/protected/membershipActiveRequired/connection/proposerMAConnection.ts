@@ -20,4 +20,9 @@ proposerMAConnectionRouter.get("/sent-requests", [
     proposerController.getSentRequests,
 ] as RequestHandler[]);
 
+proposerMAConnectionRouter.post("/request-acceptation", [
+    proposerValidation.acceptOtRejectRequestValidation,
+    proposerController.acceptOrRejectRequest,
+] as RequestHandler[]);
+
 export default proposerMAConnectionRouter;

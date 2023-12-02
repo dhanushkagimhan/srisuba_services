@@ -12,6 +12,7 @@ import { getOtherProposal } from "./proposal/getOtherProposal";
 import { sendRequest } from "./connection/sendRequest";
 import { getReceivedRequests } from "./connection/getReceivedRequests";
 import { getSentRequests } from "./connection/getSentRequests";
+import { acceptOrRejectRequest } from "./connection/acceptOrRejectRequest";
 
 export {
     register,
@@ -28,4 +29,5 @@ export {
     sendRequest,
     getReceivedRequests,
     getSentRequests,
+    acceptOrRejectRequest,
 };

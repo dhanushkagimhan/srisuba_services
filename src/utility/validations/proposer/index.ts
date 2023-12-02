@@ -7,6 +7,7 @@ import { createOrUpdateProposalValidation } from "./proposal/createOrUpdatePropo
 import { getBlockReasonValidation } from "./proposal/getBlockReasonValidation";
 import { getProposalsValidation } from "./proposal/getProposalsValidation";
 import { proposerIdPostMAValidation } from "./connection/proposerIdPostMAValidation";
+import { acceptOtRejectRequestValidation } from "./connection/acceptOtRejectRequestValidation";
 
 export {
     registerValidation,
@@ -18,4 +19,5 @@ export {
     getBlockReasonValidation,
     getProposalsValidation,
     proposerIdPostMAValidation,
+    acceptOtRejectRequestValidation,
 };
