@@ -20,10 +20,10 @@ marketerRouter.post("/regen-email-verify", [
     marketerController.marketerRegenerateEmailVerify,
 ] as RequestHandler[]);
 
-// proposerRouter.post("/forgot-password", [
-//     proposerValidation.forgotPasswordValidation,
-//     proposerController.forgotPassword,
-// ] as RequestHandler[]);
+marketerRouter.post("/forgot-password", [
+    marketerValidation.marketerForgotPasswordValidation,
+    marketerController.marketerForgotPassword,
+] as RequestHandler[]);
 
 // proposerRouter.post("/reset-password", [
 //     proposerValidation.resetPasswordValidation,
