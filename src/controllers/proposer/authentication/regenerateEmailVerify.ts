@@ -6,7 +6,6 @@ import emailSender from "../../../utility/commonMethods/emailSender";
 
 type RequestPayload = {
     email: string;
-    code: string;
 };
 
 type ApiResponse = {
