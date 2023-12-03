@@ -22,7 +22,7 @@ proposerRouter.post("/regen-email-verify", [
 ] as RequestHandler[]);
 
 proposerRouter.post("/forgot-password", [
-    proposerValidation.forgotPasswordValidation,
+    commonValidation.forgotPasswordValidation,
     proposerController.forgotPassword,
 ] as RequestHandler[]);
 

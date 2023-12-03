@@ -21,7 +21,7 @@ marketerRouter.post("/regen-email-verify", [
 ] as RequestHandler[]);
 
 marketerRouter.post("/forgot-password", [
-    marketerValidation.marketerForgotPasswordValidation,
+    commonValidation.forgotPasswordValidation,
     marketerController.marketerForgotPassword,
 ] as RequestHandler[]);
 

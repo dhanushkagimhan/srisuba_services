@@ -3,6 +3,7 @@ import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import emailSender from "../../../utility/commonMethods/emailSender";
+import { AMarketerStatus } from "@prisma/client";
 
 type RequestPayload = {
     email: string;
@@ -37,6 +38,31 @@ export const marketerForgotPassword = async (
         const payload: RequestPayload = req.body;
 
         console.log("{marketer-marketerForgotPassword} payload : ", payload);
+
+        const marketer = await prisma.affiliateMarketer.findUnique({
+            where: {
+                email: payload.email,
+            },
+            select: {
+                status: true,
+            },
+        });
+
+        if (marketer == null) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not registered",
+            };
+            return res.status(404).send(responseData);
+        }
+
+        if (marketer.status === AMarketerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not verified",
+            };
+            return res.status(403).send(responseData);
+        }
 
         const [
             emailVerifyCode,
