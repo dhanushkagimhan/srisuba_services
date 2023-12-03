@@ -11,10 +11,10 @@ export const marketerForgotPasswordValidation = checkExact(
             },
             isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
-                options: async (pEmail: string) => {
+                options: async (mEmail: string) => {
                     const exists = await prisma.affiliateMarketer.count({
                         where: {
-                            email: pEmail,
+                            email: mEmail,
                         },
                     });
 

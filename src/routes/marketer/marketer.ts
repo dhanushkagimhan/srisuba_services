@@ -25,10 +25,10 @@ marketerRouter.post("/forgot-password", [
     marketerController.marketerForgotPassword,
 ] as RequestHandler[]);
 
-// proposerRouter.post("/reset-password", [
-//     proposerValidation.resetPasswordValidation,
-//     proposerController.resetPassword,
-// ] as RequestHandler[]);
+marketerRouter.post("/reset-password", [
+    marketerValidation.marketerResetPasswordValidation,
+    marketerController.marketerResetPassword,
+] as RequestHandler[]);
 
 marketerRouter.post("/login", [
     commonValidation.loginValidation,
