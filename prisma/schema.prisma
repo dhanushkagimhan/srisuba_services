@@ -163,7 +163,7 @@ model ProposerForgotPassword {
   proposer       Proposer @relation(fields: [proposerId], references: [id])
 }
 
-enum aMarketerStatus {
+enum AMarketerStatus {
   PendingEmailVerification
   EmailVerified
 }
@@ -174,8 +174,10 @@ model AffiliateMarketer {
   password          String
   firstName         String
   lastName          String
+  gender            Gender
+  country           String
   affiliateCode     String?                    @unique
-  status            aMarketerStatus
+  status            AMarketerStatus
   accountBalance    Int
   createdAt         DateTime                   @default(now())
   updatedAt         DateTime                   @updatedAt
