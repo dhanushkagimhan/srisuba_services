@@ -1,7 +1,7 @@
 import express, { type RequestHandler, type Application } from "express";
 import * as marketerController from "../../controllers/marketer";
 import * as marketerValidation from "../../utility/validations/marketer";
-// import * as commonValidation from "../../utility/validations/common";
+import * as commonValidation from "../../utility/validations/common";
 
 const marketerRouter: Application = express();
 
@@ -30,10 +30,10 @@ marketerRouter.post("/forgot-password", [
 //     proposerController.resetPassword,
 // ] as RequestHandler[]);
 
-// proposerRouter.post("/login", [
-//     commonValidation.loginValidation,
-//     proposerController.login,
-// ] as RequestHandler[]);
+marketerRouter.post("/login", [
+    commonValidation.loginValidation,
+    marketerController.marketerLogin,
+] as RequestHandler[]);
 
 // proposerRouter.use("/p", proposerProtectedRouter);
 

@@ -1,5 +1,6 @@
 import { marketerEmailVerify } from "./authentication/marketerEmailVerify";
 import { marketerForgotPassword } from "./authentication/marketerForgotPassword";
+import { marketerLogin } from "./authentication/marketerLogin";
 import { marketerRegenerateEmailVerify } from "./authentication/marketerRegenerateEmailVerify";
 import { marketerRegister } from "./authentication/marketerRegister";
 
@@ -8,4 +9,5 @@ export {
     marketerRegenerateEmailVerify,
     marketerEmailVerify,
     marketerForgotPassword,
+    marketerLogin,
 };
