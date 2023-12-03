@@ -15,10 +15,10 @@ marketerRouter.post("/register", [
 //     proposerController.emailVerify,
 // ] as RequestHandler[]);
 
-// proposerRouter.post("/regen-email-verify", [
-//     proposerValidation.regenerateEmailVerifyValidation,
-//     proposerController.regenerateEmailVerify,
-// ] as RequestHandler[]);
+marketerRouter.post("/regen-email-verify", [
+    marketerValidation.marketerRegenerateEmailVerifyValidation,
+    marketerController.marketerRegenerateEmailVerify,
+] as RequestHandler[]);
 
 // proposerRouter.post("/forgot-password", [
 //     proposerValidation.forgotPasswordValidation,
