@@ -26,6 +26,7 @@ type ApiResponse = {
             type: ProposerPaymentType;
             value: number;
             status: PaymentStatus;
+            updatedAt: Date;
         }>;
     }>;
     message?: string;
@@ -106,6 +107,7 @@ export const getAllProposals = async (
                     type: true,
                     value: true,
                     status: true,
+                    updatedAt: true,
                 },
             };
         }
