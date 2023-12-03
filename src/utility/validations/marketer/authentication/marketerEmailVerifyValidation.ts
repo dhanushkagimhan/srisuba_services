@@ -2,7 +2,7 @@ import { AMarketerStatus } from "@prisma/client";
 import { checkExact, checkSchema } from "express-validator";
 import prisma from "../../../prismaClient/client";
 
-export const marketerRegenerateEmailVerifyValidation = checkExact(
+export const marketerEmailVerifyValidation = checkExact(
     checkSchema({
         email: {
             exists: {
@@ -13,7 +13,7 @@ export const marketerRegenerateEmailVerifyValidation = checkExact(
             isEmail: { errorMessage: "Please provide valid email", bail: true },
             custom: {
                 options: async (pEmail: string) => {
-                    const marketer = await prisma.affiliateMarketer.findUnique({
+                    const proposer = await prisma.affiliateMarketer.findUnique({
                         where: {
                             email: pEmail,
                         },
@@ -23,16 +23,28 @@ export const marketerRegenerateEmailVerifyValidation = checkExact(
                         },
                     });
 
-                    if (marketer == null) {
+                    if (proposer == null) {
                         throw new Error("Email is not registered");
                     }
                     if (
-                        marketer.status !==
+                        proposer.status !==
                         AMarketerStatus.PendingEmailVerification
                     ) {
                         throw new Error("Email is already verified");
                     }
                 },
+            },
+        },
+        code: {
+            exists: {
+                errorMessage: "code is required",
+                options: { checkFalsy: true },
+                bail: true,
+            },
+            isString: { errorMessage: "code should be string", bail: true },
+            isLength: {
+                options: { min: 6, max: 6 },
+                errorMessage: "code should be 6 characters",
             },
         },
     }),

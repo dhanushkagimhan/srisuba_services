@@ -10,10 +10,10 @@ marketerRouter.post("/register", [
     marketerController.marketerRegister,
 ] as RequestHandler[]);
 
-// proposerRouter.post("/email-verify", [
-//     proposerValidation.emailVerifyValidation,
-//     proposerController.emailVerify,
-// ] as RequestHandler[]);
+marketerRouter.post("/email-verify", [
+    marketerValidation.marketerEmailVerifyValidation,
+    marketerController.marketerEmailVerify,
+] as RequestHandler[]);
 
 marketerRouter.post("/regen-email-verify", [
     marketerValidation.marketerRegenerateEmailVerifyValidation,
