@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
-import { type ProposerStatus } from "@prisma/client";
+import { ProposerStatus } from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
 import proposerAccessTokenGenerate from "../../../utility/commonMethods/accessTokenGenerator";
 import { Role } from "../../../utility/types";
@@ -65,6 +65,14 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                 message: "Email is not registered",
             };
             return res.status(404).send(responseData);
+        }
+
+        if (proposer.status === ProposerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not verified",
+            };
+            return res.status(403).send(responseData);
         }
 
         const isMatch: boolean = bcrypt.compareSync(
