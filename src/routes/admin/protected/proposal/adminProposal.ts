@@ -25,4 +25,9 @@ adminProposalRouter.post("/change-status", [
     adminController.changeProposerStatus,
 ] as RequestHandler[]);
 
+adminProposalRouter.post("/renew-membership", [
+    adminValidation.renewMembershipValidation,
+    adminController.renewMembership,
+] as RequestHandler[]);
+
 export default adminProposalRouter;

@@ -4,6 +4,7 @@ import { getAllProposals } from "./proposal/getAllProposals";
 import { getProposal } from "./proposal/getProposal";
 import { approveProposerPayment } from "./proposal/approveProposerPayment";
 import { changeProposerStatus } from "./proposal/changeProposerStatus";
+import { renewMembership } from "./proposal/renewMembership";
 
 export {
     login,
@@ -12,4 +13,5 @@ export {
     getProposal,
     approveProposerPayment,
     changeProposerStatus,
+    renewMembership,
 };

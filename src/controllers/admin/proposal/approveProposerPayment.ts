@@ -157,7 +157,7 @@ export const approveProposerPayment = async (
                         totalSAccountBalance += proposer.payments[0].value;
 
                         let marketerReferredData;
-                        let marketerDate;
+                        let marketerData;
 
                         if (proposer.referredMarketer == null) {
                             sIncomeBalance += proposer.payments[0].value;
@@ -191,7 +191,7 @@ export const approveProposerPayment = async (
                                 marketerReferredData.marketer.accountBalance +
                                 proposer.referredMarketer.paymentValue;
 
-                            marketerDate = await tx.affiliateMarketer.update({
+                            marketerData = await tx.affiliateMarketer.update({
                                 where: {
                                     id: proposer.referredMarketer.marketerId,
                                 },
@@ -221,7 +221,7 @@ export const approveProposerPayment = async (
                         return [
                             proposerUpdated,
                             marketerReferredData,
-                            marketerDate,
+                            marketerData,
                             systemUpdated,
                         ];
                     },
