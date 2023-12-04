@@ -1,6 +1,6 @@
 import { checkExact, checkSchema } from "express-validator";
 
-export const getProposalsValidation = checkExact(
+export const getAllValidation = checkExact(
     checkSchema({
         page: {
             optional: true,

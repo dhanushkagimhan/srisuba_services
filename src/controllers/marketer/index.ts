@@ -5,6 +5,7 @@ import { marketerRegenerateEmailVerify } from "./authentication/marketerRegenera
 import { marketerRegister } from "./authentication/marketerRegister";
 import { marketerResetPassword } from "./authentication/marketerResetPassword";
 import { createAffiliateCode } from "./marketing/createAffiliateCode";
+import { getAffiliatedProposers } from "./marketing/getAffiliatedProposers";
 
 export {
     marketerRegister,
@@ -14,4 +15,5 @@ export {
     marketerLogin,
     marketerResetPassword,
     createAffiliateCode,
+    getAffiliatedProposers,
 };

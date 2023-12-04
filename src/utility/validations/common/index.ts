@@ -3,6 +3,7 @@ import { withoutAnyArgsValidation } from "./withoutAnyArg/withoutAnyArgsValidati
 import { getProposalValidation } from "./proposal/getProposalValidation";
 import { changePasswordValidation } from "./profile/changePasswordValidation";
 import { forgotPasswordValidation } from "./authentication/forgotPasswordValidation";
+import { getAllValidation } from "./pagination/getAllValidation";
 
 export {
     loginValidation,
@@ -10,4 +11,5 @@ export {
     withoutAnyArgsValidation,
     changePasswordValidation,
     forgotPasswordValidation,
+    getAllValidation,
 };

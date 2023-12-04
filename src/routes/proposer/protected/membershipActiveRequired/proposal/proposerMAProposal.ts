@@ -1,12 +1,11 @@
 import express, { type Application, type RequestHandler } from "express";
 import * as proposerController from "../../../../../controllers/proposer";
-import * as proposerValidation from "../../../../../utility/validations/proposer";
 import * as commonValidation from "../../../../../utility/validations/common";
 
 const proposerMAProposalRouter: Application = express();
 
 proposerMAProposalRouter.get("/", [
-    proposerValidation.getProposalsValidation,
+    commonValidation.getAllValidation,
     proposerController.getProposals,
 ] as RequestHandler[]);
 
