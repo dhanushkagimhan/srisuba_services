@@ -5,7 +5,7 @@ import * as commonValidation from "../../../../utility/validations/common";
 
 const proposerProfileRouter: Application = express();
 
-proposerProfileRouter.put("/edit", [
+proposerProfileRouter.put("/", [
     proposerValidation.editProfileValidation,
     proposerController.editProfile,
 ] as RequestHandler[]);

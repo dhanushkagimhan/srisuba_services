@@ -5,7 +5,7 @@ import { type ValidationError, validationResult } from "express-validator";
 type RequestPayload = {
     firstName: string;
     lastName: string;
-    birthDay: Date;
+    country: string;
 };
 
 type ApiResponse = {
@@ -13,13 +13,13 @@ type ApiResponse = {
     data?: {
         firstName: string;
         lastName: string;
-        birthDay: Date;
+        country: string;
     };
     message?: string;
     errors?: ValidationError[];
 };
 
-export const editProfile = async (
+export const marketerEditProfile = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -35,49 +35,49 @@ export const editProfile = async (
             return res.status(400).send(responseData);
         }
 
-        console.log("res locals", res.locals.proposerId);
+        console.log("res locals", res.locals.marketerId);
 
-        const proposerId: number | undefined = res.locals.proposerId;
+        const marketerId: number | undefined = res.locals.marketerId;
 
-        if (proposerId == null) {
-            throw new Error("res local not have valid proposerId");
+        if (marketerId == null) {
+            throw new Error("res local not have valid marketerId");
         }
 
         const payload: RequestPayload = req.body;
 
-        const pBirthDay = new Date(payload.birthDay);
+        console.log("{marketerEditProfile} payload : ", payload);
 
-        const proposer = await prisma.proposer.update({
+        const marketer = await prisma.affiliateMarketer.update({
             where: {
-                id: proposerId,
+                id: marketerId,
             },
             data: {
                 firstName: payload.firstName,
                 lastName: payload.lastName,
-                birthDay: pBirthDay,
+                country: payload.country,
             },
             select: {
                 id: true,
                 firstName: true,
                 lastName: true,
-                birthDay: true,
+                country: true,
             },
         });
 
-        console.log("{proposer - editProfile} : ", proposer);
+        console.log("{marketerEditProfile} : ", marketer);
 
         const responseData: ApiResponse = {
             success: true,
             data: {
-                firstName: proposer.firstName,
-                lastName: proposer.lastName,
-                birthDay: proposer.birthDay,
+                firstName: marketer.firstName,
+                lastName: marketer.lastName,
+                country: marketer.country,
             },
         };
 
         return res.status(200).send(responseData);
     } catch (error) {
-        console.log(`Unexpected Error {proposer - editProfile} : ${error}`);
+        console.log(`Unexpected Error {marketerEditProfile} : ${error}`);
         const responseData: ApiResponse = {
             success: false,
             message: "system Error",

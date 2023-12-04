@@ -9,6 +9,7 @@ import { Role } from "../../../utility/types";
 import marketingRouter from "./marketing/marketing";
 import bankAccountRouter from "./bankAccount/marketing";
 import earningsRouter from "./earning/earnings";
+import marketerProfileRouter from "./profile/marketerProfile";
 
 const marketerProtectedRouter: Application = express();
 
@@ -21,5 +22,7 @@ marketerProtectedRouter.use("/marketing", marketingRouter);
 marketerProtectedRouter.use("/bank-acc", bankAccountRouter);
 
 marketerProtectedRouter.use("/earnings", earningsRouter);
+
+marketerProtectedRouter.use("/profile", marketerProfileRouter);
 
 export default marketerProtectedRouter;

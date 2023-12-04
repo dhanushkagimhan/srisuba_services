@@ -5,7 +5,7 @@ export const editProfileValidation = checkExact(
     checkSchema({
         firstName: {
             exists: {
-                errorMessage: "firstName name is required",
+                errorMessage: "firstName is required",
                 options: { checkFalsy: true },
                 bail: true,
             },
@@ -13,7 +13,7 @@ export const editProfileValidation = checkExact(
         },
         lastName: {
             exists: {
-                errorMessage: "lastName name is required",
+                errorMessage: "lastName is required",
                 options: { checkFalsy: true },
                 bail: true,
             },

@@ -4,6 +4,7 @@ import { marketerRegisterValidation } from "./authentication/marketerRegisterVal
 import { marketerResetPasswordValidation } from "./authentication/marketerResetPasswordValidation";
 import { createOrUpdateBankAccountValidation } from "./bankAccount/createOrUpdateBankAccountValidation";
 import { createAffiliateCodeValidation } from "./marketing/createAffiliateCodeValidation";
+import { marketerEditProfileValidation } from "./profile/marketerEditProfileValidation";
 
 export {
     marketerRegisterValidation,
@@ -12,4 +13,5 @@ export {
     marketerResetPasswordValidation,
     createAffiliateCodeValidation,
     createOrUpdateBankAccountValidation,
+    marketerEditProfileValidation,
 };

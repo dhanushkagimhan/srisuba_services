@@ -9,6 +9,7 @@ import { getBankAccount } from "./bankAccount/getBankAccount";
 import { getAccountBalance } from "./earning/getAccountBalance";
 import { createAffiliateCode } from "./marketing/createAffiliateCode";
 import { getAffiliatedProposers } from "./marketing/getAffiliatedProposers";
+import { marketerEditProfile } from "./profile/marketerEditProfile";
 
 export {
     marketerRegister,
@@ -22,4 +23,5 @@ export {
     createOrUpdateBankAccount,
     getBankAccount,
     getAccountBalance,
+    marketerEditProfile,
 };
