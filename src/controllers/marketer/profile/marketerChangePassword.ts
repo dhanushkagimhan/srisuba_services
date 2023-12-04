@@ -14,7 +14,7 @@ type ApiResponse = {
     errors?: ValidationError[];
 };
 
-export const changePassword = async (
+export const marketerChangePassword = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
@@ -30,19 +30,19 @@ export const changePassword = async (
             return res.status(400).send(responseData);
         }
 
-        console.log("res locals", res.locals.proposerId);
+        console.log("res locals", res.locals.marketerId);
 
-        const proposerId: number | undefined = res.locals.proposerId;
+        const marketerId: number | undefined = res.locals.marketerId;
 
-        if (proposerId == null) {
-            throw new Error("res local not have valid proposerId");
+        if (marketerId == null) {
+            throw new Error("res local not have valid marketerId");
         }
 
         const payload: RequestPayload = req.body;
 
-        const proposer = await prisma.proposer.findUnique({
+        const marketer = await prisma.affiliateMarketer.findUnique({
             where: {
-                id: proposerId,
+                id: marketerId,
             },
             select: {
                 id: true,
@@ -50,15 +50,15 @@ export const changePassword = async (
             },
         });
 
-        console.log("{proposer - changePassword} proposer : ", proposer);
+        console.log("{marketerChangePassword} marketer : ", marketer);
 
-        if (proposer == null) {
-            throw new Error("proposer not found");
+        if (marketer == null) {
+            throw new Error("marketer not found");
         }
 
         const isMatch: boolean = bcrypt.compareSync(
             payload.currentPassword,
-            proposer.password,
+            marketer.password,
         );
 
         if (!isMatch) {
@@ -75,9 +75,9 @@ export const changePassword = async (
             saltRound,
         );
 
-        const updatedProposer = await prisma.proposer.update({
+        const updatedMarketer = await prisma.affiliateMarketer.update({
             where: {
-                id: proposerId,
+                id: marketerId,
             },
             data: {
                 password: hashPassword,
@@ -89,8 +89,8 @@ export const changePassword = async (
         });
 
         console.log(
-            "{proposer - changePassword} password updated : ",
-            updatedProposer,
+            "{marketerChangePassword} password updated : ",
+            updatedMarketer,
         );
 
         const responseData: ApiResponse = {
@@ -99,7 +99,7 @@ export const changePassword = async (
 
         return res.status(200).send(responseData);
     } catch (error) {
-        console.log(`Unexpected Error {proposer - changePassword} : ${error}`);
+        console.log(`Unexpected Error {marketerChangePassword} : ${error}`);
         const responseData: ApiResponse = {
             success: false,
             message: "system Error",
