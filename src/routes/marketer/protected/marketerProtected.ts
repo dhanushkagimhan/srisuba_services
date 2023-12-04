@@ -7,6 +7,7 @@ import express, {
 import { auth } from "../../../middlewares/auth";
 import { Role } from "../../../utility/types";
 import marketingRouter from "./marketing/marketing";
+import bankAccountRouter from "./bankAccount/marketing";
 
 const marketerProtectedRouter: Application = express();
 
@@ -15,5 +16,7 @@ marketerProtectedRouter.use((req: Request, res: Response, next: NextFunction) =>
 );
 
 marketerProtectedRouter.use("/marketing", marketingRouter);
+
+marketerProtectedRouter.use("/bank-acc", bankAccountRouter);
 
 export default marketerProtectedRouter;
