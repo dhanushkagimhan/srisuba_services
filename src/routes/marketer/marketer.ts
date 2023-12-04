@@ -2,6 +2,7 @@ import express, { type RequestHandler, type Application } from "express";
 import * as marketerController from "../../controllers/marketer";
 import * as marketerValidation from "../../utility/validations/marketer";
 import * as commonValidation from "../../utility/validations/common";
+import marketerProtectedRouter from "./protected/marketerProtected";
 
 const marketerRouter: Application = express();
 
@@ -35,6 +36,6 @@ marketerRouter.post("/login", [
     marketerController.marketerLogin,
 ] as RequestHandler[]);
 
-// proposerRouter.use("/p", proposerProtectedRouter);
+marketerRouter.use("/p", marketerProtectedRouter);
 
 export default marketerRouter;
