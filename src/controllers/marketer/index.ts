@@ -5,6 +5,7 @@ import { marketerRegenerateEmailVerify } from "./authentication/marketerRegenera
 import { marketerRegister } from "./authentication/marketerRegister";
 import { marketerResetPassword } from "./authentication/marketerResetPassword";
 import { createOrUpdateBankAccount } from "./bankAccount/createOrUpdateBankAccount";
+import { getBankAccount } from "./bankAccount/getBankAccount";
 import { createAffiliateCode } from "./marketing/createAffiliateCode";
 import { getAffiliatedProposers } from "./marketing/getAffiliatedProposers";
 
@@ -18,4 +19,5 @@ export {
     createAffiliateCode,
     getAffiliatedProposers,
     createOrUpdateBankAccount,
+    getBankAccount,
 };
