@@ -10,6 +10,7 @@ import { getMarketerReferredProposers } from "./marketer/getMarketerReferredProp
 import { getMarketerBankAccount } from "./marketer/getMarketerBankAccount";
 import { withdrawMarketerIncome } from "./marketer/withdrawMarketerIncome";
 import { getMarketerWithdrawals } from "./marketer/getMarketerWithdrawals";
+import { getSystemDetails } from "./system/getSystemDetails";
 
 export {
     login,
@@ -24,4 +25,5 @@ export {
     getMarketerBankAccount,
     withdrawMarketerIncome,
     getMarketerWithdrawals,
+    getSystemDetails,
 };
