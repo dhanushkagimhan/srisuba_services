@@ -9,6 +9,7 @@ import { getAllMarketers } from "./marketer/getAllMarketers";
 import { getMarketerReferredProposers } from "./marketer/getMarketerReferredProposers";
 import { getMarketerBankAccount } from "./marketer/getMarketerBankAccount";
 import { withdrawMarketerIncome } from "./marketer/withdrawMarketerIncome";
+import { getMarketerWithdrawals } from "./marketer/getMarketerWithdrawals";
 
 export {
     login,
@@ -22,4 +23,5 @@ export {
     getMarketerReferredProposers,
     getMarketerBankAccount,
     withdrawMarketerIncome,
+    getMarketerWithdrawals,
 };

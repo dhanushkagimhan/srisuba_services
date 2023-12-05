@@ -24,4 +24,9 @@ adminMarketerRouter.post("/withdraw", [
     adminController.withdrawMarketerIncome,
 ] as RequestHandler[]);
 
+adminMarketerRouter.get("/withdrawals/:marketerId", [
+    adminValidation.getOnlyWithMarketerIdValidation,
+    adminController.getMarketerWithdrawals,
+] as RequestHandler[]);
+
 export default adminMarketerRouter;
