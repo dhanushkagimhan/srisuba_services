@@ -109,6 +109,14 @@ export const withdrawMarketerIncome = async (
                                 },
                             });
 
+                        const marketerWithdrawal =
+                            await prisma.marketerWithdrawal.create({
+                                data: {
+                                    marketerId: payload.marketerId,
+                                    value: payload.amount,
+                                },
+                            });
+
                         const newTotalSystemAccountBalance =
                             systemData.totalSystemAccountBalance -
                             payload.amount;
@@ -133,7 +141,11 @@ export const withdrawMarketerIncome = async (
                             },
                         });
 
-                        return [marketerUpdated, systemUpdated];
+                        return [
+                            marketerUpdated,
+                            marketerWithdrawal,
+                            systemUpdated,
+                        ];
                     },
                     {
                         isolationLevel:
