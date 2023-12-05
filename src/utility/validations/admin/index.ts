@@ -7,6 +7,7 @@ import { approvePaymentValidation } from "./proposal/approvePaymentValidation";
 import { changeProposerStatusValidation } from "./proposal/changeProposerStatusValidation";
 import { getAllProposalsValidation } from "./proposal/getAllProposalsValidation";
 import { renewMembershipValidation } from "./proposal/renewMembershipValidation";
+import { withdrawSystemIncomeValidation } from "./system/withdrawSystemIncomeValidation";
 
 export {
     loginVerifyValidation,
@@ -18,4 +19,5 @@ export {
     getMarketerReferredProposersValidation,
     getOnlyWithMarketerIdValidation,
     withdrawMarketerIncomeValidation,
+    withdrawSystemIncomeValidation,
 };
