@@ -14,4 +14,9 @@ adminMarketerRouter.get("/proposers/:marketerId", [
     adminController.getMarketerReferredProposers,
 ] as RequestHandler[]);
 
+adminMarketerRouter.get("/bank-acc/:marketerId", [
+    adminValidation.getOnlyWithMarketerIdValidation,
+    adminController.getMarketerBankAccount,
+] as RequestHandler[]);
+
 export default adminMarketerRouter;
