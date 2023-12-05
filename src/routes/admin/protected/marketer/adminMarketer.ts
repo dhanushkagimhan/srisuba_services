@@ -19,4 +19,9 @@ adminMarketerRouter.get("/bank-acc/:marketerId", [
     adminController.getMarketerBankAccount,
 ] as RequestHandler[]);
 
+adminMarketerRouter.post("/withdraw", [
+    adminValidation.withdrawMarketerIncomeValidation,
+    adminController.withdrawMarketerIncome,
+] as RequestHandler[]);
+
 export default adminMarketerRouter;

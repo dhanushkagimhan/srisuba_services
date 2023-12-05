@@ -8,6 +8,7 @@ import { renewMembership } from "./proposal/renewMembership";
 import { getAllMarketers } from "./marketer/getAllMarketers";
 import { getMarketerReferredProposers } from "./marketer/getMarketerReferredProposers";
 import { getMarketerBankAccount } from "./marketer/getMarketerBankAccount";
+import { withdrawMarketerIncome } from "./marketer/withdrawMarketerIncome";
 
 export {
     login,
@@ -20,4 +21,5 @@ export {
     getAllMarketers,
     getMarketerReferredProposers,
     getMarketerBankAccount,
+    withdrawMarketerIncome,
 };
