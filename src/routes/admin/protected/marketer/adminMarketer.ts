@@ -9,4 +9,9 @@ adminMarketerRouter.get("/", [
     adminController.getAllMarketers,
 ] as RequestHandler[]);
 
+adminMarketerRouter.get("/proposers/:marketerId", [
+    adminValidation.getMarketerReferredProposersValidation,
+    adminController.getMarketerReferredProposers,
+] as RequestHandler[]);
+
 export default adminMarketerRouter;
