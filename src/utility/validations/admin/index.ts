@@ -1,4 +1,5 @@
 import { loginVerifyValidation } from "./authentication/loginVerifyValidation";
+import { getAllMarketersValidation } from "./marketer/getAllMarketersValidation";
 import { approvePaymentValidation } from "./proposal/approvePaymentValidation";
 import { changeProposerStatusValidation } from "./proposal/changeProposerStatusValidation";
 import { getAllProposalsValidation } from "./proposal/getAllProposalsValidation";
@@ -10,4 +11,5 @@ export {
     getAllProposalsValidation,
     changeProposerStatusValidation,
     renewMembershipValidation,
+    getAllMarketersValidation,
 };

@@ -113,21 +113,21 @@ export const getAllProposals = async (
         }
 
         if (proposalStatusEnum != null || isOnlyExpired) {
-            const proposalwhereSelect: Prisma.ProposerWhereInput = {};
+            const proposalWhereSelect: Prisma.ProposerWhereInput = {};
 
             if (proposalStatusEnum != null) {
-                proposalwhereSelect.status = {
+                proposalWhereSelect.status = {
                     equals: proposalStatusEnum,
                 };
             }
 
             if (isOnlyExpired) {
-                proposalwhereSelect.membershipExpiration = {
+                proposalWhereSelect.membershipExpiration = {
                     lt: new Date(),
                 };
             }
 
-            proposalsSelect.where = proposalwhereSelect;
+            proposalsSelect.where = proposalWhereSelect;
         }
 
         const [proposers, count] = await prisma.$transaction([

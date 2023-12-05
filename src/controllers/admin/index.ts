@@ -5,6 +5,7 @@ import { getProposal } from "./proposal/getProposal";
 import { approveProposerPayment } from "./proposal/approveProposerPayment";
 import { changeProposerStatus } from "./proposal/changeProposerStatus";
 import { renewMembership } from "./proposal/renewMembership";
+import { getAllMarketers } from "./marketer/getAllMarketers";
 
 export {
     login,
@@ -14,4 +15,5 @@ export {
     approveProposerPayment,
     changeProposerStatus,
     renewMembership,
+    getAllMarketers,
 };
