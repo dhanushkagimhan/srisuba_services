@@ -12,6 +12,7 @@ import { withdrawMarketerIncome } from "./marketer/withdrawMarketerIncome";
 import { getMarketerWithdrawals } from "./marketer/getMarketerWithdrawals";
 import { getSystemDetails } from "./system/getSystemDetails";
 import { withdrawSystemIncome } from "./system/withdrawSystemIncome";
+import { getSystemWithdrawals } from "./system/getSystemWithdrawals";
 
 export {
     login,
@@ -28,4 +29,5 @@ export {
     getMarketerWithdrawals,
     getSystemDetails,
     withdrawSystemIncome,
+    getSystemWithdrawals,
 };

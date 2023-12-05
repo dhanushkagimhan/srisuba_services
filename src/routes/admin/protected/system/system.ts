@@ -15,4 +15,9 @@ systemRouter.post("/withdraw", [
     adminController.withdrawSystemIncome,
 ] as RequestHandler[]);
 
+systemRouter.get("/withdrawals", [
+    commonValidation.withoutAnyArgsValidation,
+    adminController.getSystemWithdrawals,
+] as RequestHandler[]);
+
 export default systemRouter;
