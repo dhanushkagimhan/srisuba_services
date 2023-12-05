@@ -20,4 +20,9 @@ systemRouter.get("/withdrawals", [
     adminController.getSystemWithdrawals,
 ] as RequestHandler[]);
 
+systemRouter.patch("/proposal-price", [
+    adminValidation.changeProposalPriceValidation,
+    adminController.changeProposalPrice,
+] as RequestHandler[]);
+
 export default systemRouter;

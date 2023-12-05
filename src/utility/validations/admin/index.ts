@@ -7,6 +7,7 @@ import { approvePaymentValidation } from "./proposal/approvePaymentValidation";
 import { changeProposerStatusValidation } from "./proposal/changeProposerStatusValidation";
 import { getAllProposalsValidation } from "./proposal/getAllProposalsValidation";
 import { renewMembershipValidation } from "./proposal/renewMembershipValidation";
+import { changeProposalPriceValidation } from "./system/changeProposalPriceValidation";
 import { withdrawSystemIncomeValidation } from "./system/withdrawSystemIncomeValidation";
 
 export {
@@ -20,4 +21,5 @@ export {
     getOnlyWithMarketerIdValidation,
     withdrawMarketerIncomeValidation,
     withdrawSystemIncomeValidation,
+    changeProposalPriceValidation,
 };
