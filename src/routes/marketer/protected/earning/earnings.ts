@@ -9,4 +9,9 @@ earningsRouter.get("/account-balance", [
     marketerController.getAccountBalance,
 ] as RequestHandler[]);
 
+earningsRouter.get("/withdrawals", [
+    commonValidation.withoutAnyArgsValidation,
+    marketerController.getWithdrawals,
+] as RequestHandler[]);
+
 export default earningsRouter;
