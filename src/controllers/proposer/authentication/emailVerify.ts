@@ -57,6 +57,21 @@ export const emailVerify = async (
 
         console.log("{proposer-email-verify} proposer data : ", proposerData);
 
+        if (proposerData == null) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not registered",
+            };
+            return res.status(400).send(responseData);
+        }
+        if (proposerData.status !== ProposerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already verified",
+            };
+            return res.status(400).send(responseData);
+        }
+
         const codeExpirationTime = proposerData?.emailVerify?.expirationTime;
         const verifyCode = proposerData?.emailVerify?.code;
 
