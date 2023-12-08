@@ -10,20 +10,7 @@ export const registerValidation = checkExact(
                 options: { checkFalsy: true },
                 bail: true,
             },
-            isEmail: { errorMessage: "Please provide valid email", bail: true },
-            custom: {
-                options: async (pEmail: string) => {
-                    const exists = await prisma.proposer.count({
-                        where: {
-                            email: pEmail,
-                        },
-                    });
-
-                    if (exists > 0) {
-                        throw new Error("Email is already registered");
-                    }
-                },
-            },
+            isEmail: { errorMessage: "Please provide valid email" },
         },
         password: {
             exists: {

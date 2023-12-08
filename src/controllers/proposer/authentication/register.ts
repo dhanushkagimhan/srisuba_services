@@ -50,6 +50,20 @@ export const register = async (
 
         const payload: RequestPayload = req.body;
 
+        const exists = await prisma.proposer.count({
+            where: {
+                email: payload.email,
+            },
+        });
+
+        if (exists > 0) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already registered!",
+            };
+            return res.status(400).send(responseData);
+        }
+
         const proposalPrice: number = await proposalPriceGetter();
 
         const saltRound = 8;

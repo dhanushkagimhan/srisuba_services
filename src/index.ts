@@ -12,7 +12,7 @@ const app: Application = express();
 const PORT: string | number = process.env.PORT ?? 8080;
 
 const corOptions = {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     methods: "GET,PATCH,POST,DELETE",
 };
 
