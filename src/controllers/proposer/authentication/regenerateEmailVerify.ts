@@ -3,6 +3,7 @@ import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import emailSender from "../../../utility/commonMethods/emailSender";
+import { ProposerStatus } from "@prisma/client";
 
 type RequestPayload = {
     email: string;
@@ -34,6 +35,33 @@ export const regenerateEmailVerify = async (
         const payload: RequestPayload = req.body;
 
         console.log("{proposer-regenerateEmailVerify} payload : ", payload);
+
+        const proposer = await prisma.proposer.findUnique({
+            where: {
+                email: payload.email,
+            },
+            select: {
+                email: true,
+                status: true,
+            },
+        });
+
+        if (proposer == null) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not registered",
+            };
+
+            return res.status(400).send(responseData);
+        }
+        if (proposer.status !== ProposerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already verified",
+            };
+
+            return res.status(400).send(responseData);
+        }
 
         const [
             emailVerifyCode,

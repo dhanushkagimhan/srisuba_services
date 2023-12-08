@@ -10,30 +10,7 @@ export const regenerateEmailVerifyValidation = checkExact(
                 options: { checkFalsy: true },
                 bail: true,
             },
-            isEmail: { errorMessage: "Please provide valid email", bail: true },
-            custom: {
-                options: async (pEmail: string) => {
-                    const proposer = await prisma.proposer.findUnique({
-                        where: {
-                            email: pEmail,
-                        },
-                        select: {
-                            email: true,
-                            status: true,
-                        },
-                    });
-
-                    if (proposer == null) {
-                        throw new Error("Email is not registered");
-                    }
-                    if (
-                        proposer.status !==
-                        ProposerStatus.PendingEmailVerification
-                    ) {
-                        throw new Error("Email is already verified");
-                    }
-                },
-            },
+            isEmail: { errorMessage: "Please provide valid email" },
         },
     }),
 );
