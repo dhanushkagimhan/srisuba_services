@@ -18,7 +18,7 @@ type ApiResponse = {
         email: string;
         firstName: string;
         lastName: string;
-        accessToken: string;
+        accessToken?: string;
         status: ProposerStatus;
         membershipExpiration: Date;
     };
@@ -69,10 +69,17 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         if (proposer.status === ProposerStatus.PendingEmailVerification) {
             const responseData: ApiResponse = {
-                success: false,
-                message: "Email is not verified",
+                success: true,
+                data: {
+                    id: proposer.id,
+                    email: payload.email,
+                    firstName: proposer.firstName,
+                    lastName: proposer.lastName,
+                    status: proposer.status,
+                    membershipExpiration: proposer.membershipExpiration,
+                },
             };
-            return res.status(403).send(responseData);
+            return res.status(200).send(responseData);
         }
 
         const isMatch: boolean = bcrypt.compareSync(
