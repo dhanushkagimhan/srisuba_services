@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import { checkExact, checkSchema } from "express-validator";
-import prisma from "../../../prismaClient/client";
 
 export const registerValidation = checkExact(
     checkSchema({
