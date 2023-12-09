@@ -56,14 +56,6 @@ export const forgotPassword = async (
             return res.status(404).send(responseData);
         }
 
-        if (proposer.status === ProposerStatus.PendingEmailVerification) {
-            const responseData: ApiResponse = {
-                success: false,
-                message: "Email is not verified",
-            };
-            return res.status(403).send(responseData);
-        }
-
         const [
             emailVerifyCode,
             hashEmailVerification,

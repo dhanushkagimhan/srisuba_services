@@ -73,6 +73,7 @@ export const marketerLogin = async (
         }
 
         if (marketer.status === AMarketerStatus.PendingEmailVerification) {
+            // this one need change according to proposer login :ToDo
             const responseData: ApiResponse = {
                 success: false,
                 message: "Email is not verified",
