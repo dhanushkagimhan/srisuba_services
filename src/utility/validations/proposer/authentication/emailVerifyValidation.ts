@@ -1,6 +1,4 @@
-import { ProposerStatus } from "@prisma/client";
 import { checkExact, checkSchema } from "express-validator";
-import prisma from "../../../prismaClient/client";
 
 export const emailVerifyValidation = checkExact(
     checkSchema({
