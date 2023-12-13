@@ -105,6 +105,9 @@ export const getProposals = async (
                     },
                 },
                 where: proposalsSelect,
+                orderBy: {
+                    id: "desc",
+                },
             }),
             prisma.proposer.count({ where: proposalsSelect }),
         ]);
