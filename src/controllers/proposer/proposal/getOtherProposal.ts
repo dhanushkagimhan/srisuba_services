@@ -7,6 +7,7 @@ import {
     MatchingProposalStatus,
     ProposerStatus,
 } from "@prisma/client";
+import dayjs from "dayjs";
 
 type ProposerResponse = {
     profilePhoto: string;
@@ -40,6 +41,7 @@ type ProposerResponse = {
     motherCountryOfResidence: string;
     motherAdditionalInfo: string | null;
     horoscopeMatching: boolean;
+    age: number;
     birthDay?: Date;
     connection?: {
         status: MatchingProposalStatus;
@@ -188,7 +190,10 @@ export const getOtherProposal = async (
             return res.status(400).send(responseData);
         }
 
-        const proposerResponse: ProposerResponse = proposal.proposal;
+        const proposerResponse: ProposerResponse = {
+            ...proposal.proposal,
+            age: dayjs().diff(proposal.birthDay, "year"),
+        };
 
         if (proposal.proposing.length === 1) {
             proposerResponse.connection = {
