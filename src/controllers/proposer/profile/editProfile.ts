@@ -5,7 +5,7 @@ import { type ValidationError, validationResult } from "express-validator";
 type RequestPayload = {
     firstName: string;
     lastName: string;
-    birthDay: Date;
+    birthDay: string;
 };
 
 type ApiResponse = {

@@ -20,6 +20,7 @@ type ApiResponse = {
         lastName: string;
         accessToken?: string;
         status: ProposerStatus;
+        birthDay: Date;
         membershipExpiration: Date;
     };
     message?: string;
@@ -53,6 +54,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                 lastName: true,
                 password: true,
                 status: true,
+                birthDay: true,
                 membershipExpiration: true,
             },
         });
@@ -76,6 +78,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                     firstName: proposer.firstName,
                     lastName: proposer.lastName,
                     status: proposer.status,
+                    birthDay: proposer.birthDay,
                     membershipExpiration: proposer.membershipExpiration,
                 },
             };
@@ -109,6 +112,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                 firstName: proposer.firstName,
                 lastName: proposer.lastName,
                 status: proposer.status,
+                birthDay: proposer.birthDay,
                 membershipExpiration: proposer.membershipExpiration,
                 accessToken: pAccessToken,
             },
