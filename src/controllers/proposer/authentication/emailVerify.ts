@@ -14,6 +14,7 @@ type RequestPayload = {
 type ApiResponse = {
     success: boolean;
     data?: {
+        status: ProposerStatus;
         accessToken: string;
     };
     message?: string;
@@ -130,6 +131,7 @@ export const emailVerify = async (
         const responseData: ApiResponse = {
             success: true,
             data: {
+                status: proposerUpdate.status,
                 accessToken: pAccessToken,
             },
         };
