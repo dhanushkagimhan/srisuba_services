@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
-import { AMarketerStatus, type ProposerStatus } from "@prisma/client";
+import { AMarketerStatus } from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
 import proposerAccessTokenGenerate from "../../../utility/commonMethods/accessTokenGenerator";
 import { Role } from "../../../utility/types";
@@ -18,8 +18,8 @@ type ApiResponse = {
         email: string;
         firstName: string;
         lastName: string;
-        accessToken: string;
-        status: ProposerStatus;
+        accessToken?: string;
+        status: AMarketerStatus;
         accountBalance: number;
         affiliateCode: string | null;
     };
@@ -72,15 +72,6 @@ export const marketerLogin = async (
             return res.status(404).send(responseData);
         }
 
-        if (marketer.status === AMarketerStatus.PendingEmailVerification) {
-            // this one need change according to proposer login :ToDo
-            const responseData: ApiResponse = {
-                success: false,
-                message: "Email is not verified",
-            };
-            return res.status(403).send(responseData);
-        }
-
         const isMatch: boolean = bcrypt.compareSync(
             payload.password,
             marketer.password,
@@ -94,12 +85,6 @@ export const marketerLogin = async (
             return res.status(401).send(responseData);
         }
 
-        const pAccessToken = proposerAccessTokenGenerate(
-            Role.Marketer,
-            payload.email,
-            marketer.id,
-        );
-
         const responseData: ApiResponse = {
             success: true,
             data: {
@@ -108,11 +93,23 @@ export const marketerLogin = async (
                 firstName: marketer.firstName,
                 lastName: marketer.lastName,
                 status: marketer.status,
-                accessToken: pAccessToken,
                 accountBalance: marketer.accountBalance,
                 affiliateCode: marketer.affiliateCode,
             },
         };
+
+        if (marketer.status !== AMarketerStatus.PendingEmailVerification) {
+            const pAccessToken = proposerAccessTokenGenerate(
+                Role.Marketer,
+                payload.email,
+                marketer.id,
+            );
+
+            if (responseData.data == null) {
+                throw new Error("responseData data value equal to null");
+            }
+            responseData.data.accessToken = pAccessToken;
+        }
 
         return res.status(200).send(responseData);
     } catch (error) {

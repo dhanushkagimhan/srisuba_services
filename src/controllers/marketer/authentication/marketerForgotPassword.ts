@@ -3,7 +3,6 @@ import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import emailSender from "../../../utility/commonMethods/emailSender";
-import { AMarketerStatus } from "@prisma/client";
 
 type RequestPayload = {
     email: string;
