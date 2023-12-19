@@ -106,7 +106,7 @@ export const marketerLogin = async (
             );
 
             if (responseData.data == null) {
-                throw new Error("responseData data value equal to null");
+                throw new Error("ResponseData data value equal to null");
             }
             responseData.data.accessToken = pAccessToken;
         }

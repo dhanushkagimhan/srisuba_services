@@ -69,22 +69,6 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             return res.status(404).send(responseData);
         }
 
-        if (proposer.status === ProposerStatus.PendingEmailVerification) {
-            const responseData: ApiResponse = {
-                success: true,
-                data: {
-                    id: proposer.id,
-                    email: payload.email,
-                    firstName: proposer.firstName,
-                    lastName: proposer.lastName,
-                    status: proposer.status,
-                    birthDay: proposer.birthDay,
-                    membershipExpiration: proposer.membershipExpiration,
-                },
-            };
-            return res.status(200).send(responseData);
-        }
-
         const isMatch: boolean = bcrypt.compareSync(
             payload.password,
             proposer.password,
@@ -98,12 +82,6 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             return res.status(401).send(responseData);
         }
 
-        const pAccessToken = proposerAccessTokenGenerate(
-            Role.Proposer,
-            payload.email,
-            proposer.id,
-        );
-
         const responseData: ApiResponse = {
             success: true,
             data: {
@@ -114,9 +92,22 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                 status: proposer.status,
                 birthDay: proposer.birthDay,
                 membershipExpiration: proposer.membershipExpiration,
-                accessToken: pAccessToken,
             },
         };
+
+        if (proposer.status !== ProposerStatus.PendingEmailVerification) {
+            const pAccessToken = proposerAccessTokenGenerate(
+                Role.Proposer,
+                payload.email,
+                proposer.id,
+            );
+
+            if (responseData.data == null) {
+                throw new Error("");
+            }
+
+            responseData.data.accessToken = pAccessToken;
+        }
 
         return res.status(200).send(responseData);
     } catch (error) {
