@@ -14,7 +14,14 @@ type RequestPayload = {
 type ApiResponse = {
     success: boolean;
     data?: {
-        accessToken: string;
+        id: number;
+        email: string;
+        firstName: string;
+        lastName: string;
+        accessToken?: string;
+        status: AMarketerStatus;
+        accountBalance: number;
+        affiliateCode: string | null;
     };
     message?: string;
     errors?: ValidationError[];
@@ -113,6 +120,10 @@ export const marketerEmailVerify = async (
             select: {
                 id: true,
                 status: true,
+                firstName: true,
+                lastName: true,
+                accountBalance: true,
+                affiliateCode: true,
             },
         });
 
@@ -127,7 +138,14 @@ export const marketerEmailVerify = async (
         const responseData: ApiResponse = {
             success: true,
             data: {
+                id: marketerUpdate.id,
+                email: payload.email,
+                firstName: marketerUpdate.firstName,
+                lastName: marketerUpdate.lastName,
                 accessToken: pAccessToken,
+                status: marketerUpdate.status,
+                accountBalance: marketerUpdate.accountBalance,
+                affiliateCode: marketerUpdate.affiliateCode,
             },
         };
 
