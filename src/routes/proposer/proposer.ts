@@ -12,7 +12,7 @@ proposerRouter.post("/register", [
 ] as RequestHandler[]);
 
 proposerRouter.post("/email-verify", [
-    proposerValidation.emailVerifyValidation,
+    commonValidation.emailVerifyValidation,
     proposerController.emailVerify,
 ] as RequestHandler[]);
 

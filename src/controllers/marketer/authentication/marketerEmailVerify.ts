@@ -57,6 +57,21 @@ export const marketerEmailVerify = async (
 
         console.log("{marketerEmailVerify} proposer data : ", marketerData);
 
+        if (marketerData == null) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not registered",
+            };
+            return res.status(400).send(responseData);
+        }
+        if (marketerData.status !== AMarketerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already verified",
+            };
+            return res.status(400).send(responseData);
+        }
+
         const codeExpirationTime = marketerData?.emailVerify?.expirationTime;
         const verifyCode = marketerData?.emailVerify?.code;
 

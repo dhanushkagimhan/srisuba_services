@@ -12,7 +12,7 @@ marketerRouter.post("/register", [
 ] as RequestHandler[]);
 
 marketerRouter.post("/email-verify", [
-    marketerValidation.marketerEmailVerifyValidation,
+    commonValidation.emailVerifyValidation,
     marketerController.marketerEmailVerify,
 ] as RequestHandler[]);
 

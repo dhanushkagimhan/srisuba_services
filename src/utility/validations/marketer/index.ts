@@ -1,4 +1,3 @@
-import { marketerEmailVerifyValidation } from "./authentication/marketerEmailVerifyValidation";
 import { marketerRegenerateEmailVerifyValidation } from "./authentication/marketerRegenerateEmailVerifyValidation";
 import { marketerRegisterValidation } from "./authentication/marketerRegisterValidation";
 import { marketerResetPasswordValidation } from "./authentication/marketerResetPasswordValidation";
@@ -9,7 +8,6 @@ import { marketerEditProfileValidation } from "./profile/marketerEditProfileVali
 export {
     marketerRegisterValidation,
     marketerRegenerateEmailVerifyValidation,
-    marketerEmailVerifyValidation,
     marketerResetPasswordValidation,
     createAffiliateCodeValidation,
     createOrUpdateBankAccountValidation,

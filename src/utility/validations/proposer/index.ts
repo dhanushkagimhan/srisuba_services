@@ -1,4 +1,3 @@
-import { emailVerifyValidation } from "./authentication/emailVerifyValidation";
 import { regenerateEmailVerifyValidation } from "./authentication/regenerateEmailVerifyValidation";
 import { registerValidation } from "./authentication/registerValidation";
 import { resetPasswordValidation } from "./authentication/resetPasswordValidation";
@@ -10,7 +9,6 @@ import { editProfileValidation } from "./profile/editProfileValidation";
 
 export {
     registerValidation,
-    emailVerifyValidation,
     regenerateEmailVerifyValidation,
     resetPasswordValidation,
     createOrUpdateProposalValidation,
