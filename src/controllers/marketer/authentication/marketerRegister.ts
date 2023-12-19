@@ -42,6 +42,20 @@ export const marketerRegister = async (
 
         const payload: RequestPayload = req.body;
 
+        const exists = await prisma.affiliateMarketer.count({
+            where: {
+                email: payload.email,
+            },
+        });
+
+        if (exists > 0) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already registered!",
+            };
+            return res.status(400).send(responseData);
+        }
+
         const saltRound = 8;
         const hashPassword: string = await bcrypt.hash(
             payload.password,
