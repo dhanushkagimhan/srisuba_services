@@ -5,6 +5,7 @@ import { changePasswordValidation } from "./profile/changePasswordValidation";
 import { forgotPasswordValidation } from "./authentication/forgotPasswordValidation";
 import { getAllValidation } from "./pagination/getAllValidation";
 import { emailVerifyValidation } from "./authentication/emailVerifyValidation";
+import { regenerateEmailVerifyValidation } from "./authentication/regenerateEmailVerifyValidation";
 
 export {
     loginValidation,
@@ -14,4 +15,5 @@ export {
     forgotPasswordValidation,
     getAllValidation,
     emailVerifyValidation,
+    regenerateEmailVerifyValidation,
 };

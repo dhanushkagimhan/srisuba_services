@@ -17,7 +17,7 @@ marketerRouter.post("/email-verify", [
 ] as RequestHandler[]);
 
 marketerRouter.post("/regen-email-verify", [
-    marketerValidation.marketerRegenerateEmailVerifyValidation,
+    commonValidation.regenerateEmailVerifyValidation,
     marketerController.marketerRegenerateEmailVerify,
 ] as RequestHandler[]);
 

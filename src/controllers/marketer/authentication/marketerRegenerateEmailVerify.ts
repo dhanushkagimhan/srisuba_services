@@ -3,6 +3,7 @@ import { type ValidationError, validationResult } from "express-validator";
 import prisma from "../../../utility/prismaClient/client";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import emailSender from "../../../utility/commonMethods/emailSender";
+import { AMarketerStatus } from "@prisma/client";
 
 type RequestPayload = {
     email: string;
@@ -37,6 +38,33 @@ export const marketerRegenerateEmailVerify = async (
             "{marketer-marketerRegenerateEmailVerify} payload : ",
             payload,
         );
+
+        const marketer = await prisma.affiliateMarketer.findUnique({
+            where: {
+                email: payload.email,
+            },
+            select: {
+                email: true,
+                status: true,
+            },
+        });
+
+        if (marketer == null) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is not registered",
+            };
+
+            return res.status(400).send(responseData);
+        }
+        if (marketer.status !== AMarketerStatus.PendingEmailVerification) {
+            const responseData: ApiResponse = {
+                success: false,
+                message: "Email is already verified",
+            };
+
+            return res.status(400).send(responseData);
+        }
 
         const [
             emailVerifyCode,

@@ -17,7 +17,7 @@ proposerRouter.post("/email-verify", [
 ] as RequestHandler[]);
 
 proposerRouter.post("/regen-email-verify", [
-    proposerValidation.regenerateEmailVerifyValidation,
+    commonValidation.regenerateEmailVerifyValidation,
     proposerController.regenerateEmailVerify,
 ] as RequestHandler[]);
 
