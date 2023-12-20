@@ -4,7 +4,7 @@ import { type ValidationError, validationResult } from "express-validator";
 import { type PaymentStatus, type Prisma } from "@prisma/client";
 
 type ProposerResponse = {
-    id: number;
+    key: number;
     paymentValue: number;
     paymentStatus: PaymentStatus;
     createdAt: Date;
@@ -108,7 +108,7 @@ export const getAffiliatedProposers = async (
                 );
             }
             proposerResponse.push({
-                id: rProposer.id,
+                key: rProposer.id,
                 paymentValue: rProposer.paymentValue,
                 paymentStatus: rProposer.paymentStatus,
                 createdAt: rProposer.createdAt,
