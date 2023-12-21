@@ -2,13 +2,15 @@ import { type Request, type Response } from "express";
 import prisma from "../../../utility/prismaClient/client";
 import { type ValidationError, validationResult } from "express-validator";
 
+type MarketerWithdrawalResponse = {
+    key: number;
+    value: number;
+    createdAt: Date;
+};
+
 type ApiResponse = {
     success: boolean;
-    data?: Array<{
-        id: number;
-        value: number;
-        createdAt: Date;
-    }>;
+    data?: MarketerWithdrawalResponse[];
     message?: string;
     errors?: ValidationError[];
 };
@@ -46,6 +48,7 @@ export const getWithdrawals = async (
                 value: true,
                 createdAt: true,
             },
+            orderBy: { id: "desc" },
         });
 
         console.log(
@@ -53,9 +56,16 @@ export const getWithdrawals = async (
             marketerWithdrawals,
         );
 
+        const marketerWithdrawalsResponse: MarketerWithdrawalResponse[] =
+            marketerWithdrawals.map((withdrawal) => ({
+                key: withdrawal.id,
+                value: withdrawal.value,
+                createdAt: withdrawal.createdAt,
+            }));
+
         const responseData: ApiResponse = {
             success: true,
-            data: marketerWithdrawals,
+            data: marketerWithdrawalsResponse,
         };
 
         return res.status(200).send(responseData);
