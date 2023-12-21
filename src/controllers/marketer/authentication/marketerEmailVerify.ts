@@ -22,6 +22,7 @@ type ApiResponse = {
         status: AMarketerStatus;
         accountBalance: number;
         affiliateCode: string | null;
+        country: string;
     };
     message?: string;
     errors?: ValidationError[];
@@ -124,6 +125,7 @@ export const marketerEmailVerify = async (
                 lastName: true,
                 accountBalance: true,
                 affiliateCode: true,
+                country: true,
             },
         });
 
@@ -146,6 +148,7 @@ export const marketerEmailVerify = async (
                 status: marketerUpdate.status,
                 accountBalance: marketerUpdate.accountBalance,
                 affiliateCode: marketerUpdate.affiliateCode,
+                country: marketerUpdate.country,
             },
         };
 
