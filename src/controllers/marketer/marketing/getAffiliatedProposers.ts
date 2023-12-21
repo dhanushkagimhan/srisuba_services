@@ -88,6 +88,9 @@ export const getAffiliatedProposers = async (
                     },
                 },
                 where: referredProposersSelect,
+                orderBy: {
+                    id: "desc",
+                },
             }),
             prisma.marketerReferredProposal.count({
                 where: referredProposersSelect,
