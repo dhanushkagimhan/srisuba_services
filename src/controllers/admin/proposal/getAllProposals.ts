@@ -66,9 +66,10 @@ export const getAllProposals = async (
         const isOnlyExpired: boolean = req.query.isOnlyExpired === "true";
         const isIncludePayments: boolean =
             req.query.isIncludePayments === "true";
+        const orderDesc: boolean = req.query.orderDesc === "true";
 
         console.log(
-            `{admin-getAllProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}, ${isIncludePayments}`,
+            `{admin-getAllProposals} query parameters : ${pageNumber}, ${pageSize}, ${proposerStatus}, ${isOnlyExpired}, ${isIncludePayments}, ${orderDesc}`,
         );
 
         const proposalStatusEnum: ProposerStatus | undefined =
@@ -128,6 +129,10 @@ export const getAllProposals = async (
             }
 
             proposalsSelect.where = proposalWhereSelect;
+        }
+
+        if (orderDesc) {
+            proposalsSelect.orderBy = { id: "desc" };
         }
 
         const [proposers, count] = await prisma.$transaction([

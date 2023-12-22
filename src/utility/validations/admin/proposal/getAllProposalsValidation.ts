@@ -38,7 +38,7 @@ export const getAllProposalsValidation = checkExact(
         },
         proposerStatus: {
             optional: true,
-            isString: { errorMessage: "code should be string" },
+            isString: { errorMessage: "proposerStatus should be string" },
         },
         isOnlyExpired: {
             optional: true,
@@ -50,6 +50,12 @@ export const getAllProposalsValidation = checkExact(
             optional: true,
             isBoolean: {
                 errorMessage: "isIncludePayments should be boolean",
+            },
+        },
+        orderDesc: {
+            optional: true,
+            isBoolean: {
+                errorMessage: "orderDesc should be boolean",
             },
         },
     }),
