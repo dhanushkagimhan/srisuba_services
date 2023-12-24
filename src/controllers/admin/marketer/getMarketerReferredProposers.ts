@@ -66,6 +66,9 @@ export const getMarketerReferredProposers = async (
             where: {
                 marketerId: aMarketerId,
             },
+            orderBy: {
+                id: "desc",
+            },
         };
 
         const [proposers, count] = await prisma.$transaction([
