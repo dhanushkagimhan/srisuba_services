@@ -44,6 +44,9 @@ export const getMarketerWithdrawals = async (
                 createdAt: true,
                 updatedAt: true,
             },
+            orderBy: {
+                id: "desc",
+            },
         });
 
         console.log(
