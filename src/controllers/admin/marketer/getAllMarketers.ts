@@ -51,9 +51,10 @@ export const getAllMarketers = async (
 
         const isOnlyWithdrawAvailable: boolean =
             req.query.isOnlyWithdrawAvailable === "true";
+        const orderDesc: boolean = req.query.orderDesc === "true";
 
         console.log(
-            `{admin-getAllMarketers} query parameters : ${pageNumber}, ${pageSize}, ${isOnlyWithdrawAvailable}`,
+            `{admin-getAllMarketers} query parameters : ${pageNumber}, ${pageSize}, ${isOnlyWithdrawAvailable}, ${orderDesc}`,
         );
 
         const pageSkip: number = pageSize * (pageNumber - 1);
@@ -82,6 +83,10 @@ export const getAllMarketers = async (
                     gt: 0,
                 },
             };
+        }
+
+        if (orderDesc) {
+            marketerSelect.orderBy = { id: "desc" };
         }
 
         const [marketers, count] = await prisma.$transaction([

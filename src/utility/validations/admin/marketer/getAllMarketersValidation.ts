@@ -42,5 +42,11 @@ export const getAllMarketersValidation = checkExact(
                 errorMessage: "isOnlyWithdrawAvailable should be boolean",
             },
         },
+        orderDesc: {
+            optional: true,
+            isBoolean: {
+                errorMessage: "orderDesc should be boolean",
+            },
+        },
     }),
 );
