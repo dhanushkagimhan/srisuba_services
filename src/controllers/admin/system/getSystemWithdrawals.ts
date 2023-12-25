@@ -30,7 +30,9 @@ export const getSystemWithdrawals = async (
             return res.status(400).send(responseData);
         }
 
-        const systemWithdrawals = await prisma.systemWithdrawal.findMany({});
+        const systemWithdrawals = await prisma.systemWithdrawal.findMany({
+            orderBy: { id: "desc" },
+        });
 
         console.log(
             "{Admin - getSystemWithdrawals} system withdrawals : ",
