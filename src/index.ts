@@ -12,7 +12,7 @@ const app: Application = express();
 const PORT: string | number = process.env.PORT ?? 8080;
 
 const corOptions = {
-    origin: "http://localhost:5173",
+    origin: process.env.ALLOWED_ORIGIN ?? "https://www.srisuba.com",
     methods: "GET,PATCH,PUT,POST,DELETE",
 };
 
