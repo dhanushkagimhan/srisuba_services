@@ -42,8 +42,6 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         const payload: RequestPayload = req.body;
 
-        console.log("{proposer-login} payload : ", payload);
-
         const proposer = await prisma.proposer.findUnique({
             where: {
                 email: payload.email,

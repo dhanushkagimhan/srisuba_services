@@ -33,8 +33,6 @@ export const marketerResetPassword = async (
 
         const payload: RequestPayload = req.body;
 
-        console.log("{marketerResetPassword} payload : ", payload);
-
         const marketerData = await prisma.affiliateMarketer.findUnique({
             where: {
                 email: payload.email,

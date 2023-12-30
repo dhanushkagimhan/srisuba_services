@@ -33,8 +33,6 @@ export const resetPassword = async (
 
         const payload: RequestPayload = req.body;
 
-        console.log("{proposer-resetPassword} payload : ", payload);
-
         const proposerData = await prisma.proposer.findUnique({
             where: {
                 email: payload.email,

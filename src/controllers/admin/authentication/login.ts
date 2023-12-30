@@ -32,8 +32,6 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         const payload: RequestPayload = req.body;
 
-        console.log("{admin-login} payload : ", payload);
-
         const admin = await prisma.system.findUnique({
             where: {
                 adminEmail: payload.email,

@@ -46,8 +46,6 @@ export const marketerLogin = async (
 
         const payload: RequestPayload = req.body;
 
-        console.log("{marketerLogin} payload : ", payload);
-
         const marketer = await prisma.affiliateMarketer.findUnique({
             where: {
                 email: payload.email,
