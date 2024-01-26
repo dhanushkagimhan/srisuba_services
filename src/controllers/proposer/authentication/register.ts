@@ -3,15 +3,16 @@ import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import {
     ProposerStatus,
-    type Prisma,
-    type Gender,
+    Gender,
     ProposerPaymentType,
     PaymentStatus,
+    type Prisma,
 } from "@prisma/client";
 import { type ValidationError, validationResult } from "express-validator";
 import emailVerificationCode from "../../../utility/commonMethods/emailVerificationCode";
 import proposalPriceGetter from "../../../utility/commonMethods/proposalPriceGetter";
 import emailSender from "../../../utility/commonMethods/emailSender";
+import dayjs from "dayjs";
 
 type RequestPayload = {
     email: string;
@@ -80,7 +81,13 @@ export const register = async (
 
         const pBirthDay = new Date(payload.birthDay);
 
-        const proposerExpirationTime = new Date();
+        let proposerExpirationTime: Date;
+
+        if (payload.gender === Gender.Female) {
+            proposerExpirationTime = dayjs().add(365, "day").toDate();
+        } else {
+            proposerExpirationTime = new Date();
+        }
 
         const newProposer: Prisma.ProposerCreateInput = {
             email: payload.email,
