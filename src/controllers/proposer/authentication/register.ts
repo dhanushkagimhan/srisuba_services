@@ -104,14 +104,17 @@ export const register = async (
                     expirationTime: emailVerificationCodeExpireTime,
                 },
             },
-            payments: {
+        };
+
+        if (payload.gender === Gender.Male) {
+            newProposer.payments = {
                 create: {
                     type: ProposerPaymentType.Initial,
                     value: proposalPrice,
                     status: PaymentStatus.Pending,
                 },
-            },
-        };
+            };
+        }
 
         if (payload.referralCode != null) {
             const marketerSelect: Prisma.AffiliateMarketerWhereUniqueInput = {
