@@ -3,8 +3,7 @@ import prisma from "../../../utility/prismaClient/client";
 import bcrypt from "bcrypt";
 import {
     ProposerStatus,
-    Gender,
-    ProposerPaymentType,
+    type Gender,
     PaymentStatus,
     type Prisma,
 } from "@prisma/client";
@@ -81,13 +80,7 @@ export const register = async (
 
         const pBirthDay = new Date(payload.birthDay);
 
-        let proposerExpirationTime: Date;
-
-        if (payload.gender === Gender.Female) {
-            proposerExpirationTime = dayjs().add(365, "day").toDate();
-        } else {
-            proposerExpirationTime = new Date();
-        }
+        const proposerExpirationTime: Date = dayjs().add(365, "day").toDate();
 
         const newProposer: Prisma.ProposerCreateInput = {
             email: payload.email,
@@ -105,16 +98,6 @@ export const register = async (
                 },
             },
         };
-
-        if (payload.gender === Gender.Male) {
-            newProposer.payments = {
-                create: {
-                    type: ProposerPaymentType.Initial,
-                    value: proposalPrice,
-                    status: PaymentStatus.Pending,
-                },
-            };
-        }
 
         if (payload.referralCode != null) {
             const marketerSelect: Prisma.AffiliateMarketerWhereUniqueInput = {

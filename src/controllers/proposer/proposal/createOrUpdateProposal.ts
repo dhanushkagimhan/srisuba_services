@@ -5,7 +5,6 @@ import {
     type FoodPreference,
     ProposerStatus,
     type Prisma,
-    Gender,
 } from "@prisma/client";
 
 type RequestPayload = {
@@ -85,7 +84,6 @@ export const createOrUpdateProposal = async (
             },
             select: {
                 status: true,
-                gender: true,
             },
         });
 
@@ -121,11 +119,7 @@ export const createOrUpdateProposal = async (
         };
 
         if (proposer.status === ProposerStatus.EmailVerified) {
-            if (proposer.gender === Gender.Female) {
-                proposerUpdatingData.status = ProposerStatus.PaymentApproved;
-            } else {
-                proposerUpdatingData.status = ProposerStatus.PendingPayment;
-            }
+            proposerUpdatingData.status = ProposerStatus.PaymentApproved;
         } else if (proposer.status === ProposerStatus.Rejected) {
             proposerUpdatingData.status = ProposerStatus.RejectionResolved;
         } else if (proposer.status === ProposerStatus.Banned) {
